@@ -3,24 +3,10 @@ import java.util.Scanner;
 public class PetKeepMain {
     public static void main(String[] args) {
 
-//HELLOOO
-//
-//      1. Add pet
-//      2. See list of pets
-//      3. Info about a pet (choose by name)
-//      4. Add medicine for a pet
-//      5. Add vaccine for a pet
-//      6. Add info about food for a pet
-//      7. See vaccine schedule
-//      8. Add info about allergies
-//      9. Delete medicine for a pet
-//      10. Delete vaccine for a pet
-//      11. Delete food info
-//      12. Delete pet
-//      13. EXIT
+        DBConnection petKeepDb = new DBConnection();
 
         Scanner scanner = new Scanner(System.in);
-        int menuItem = 1;
+        int menuItem = 0;
 
         do {
             System.out.println("~~~~");
