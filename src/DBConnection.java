@@ -22,7 +22,7 @@ public class DBConnection {
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "name TEXT NOT NULL, " +
                                 "animal_type TEXT NOT NULL, " +
-                                "date_of_birth TEXT NOT NULL, " +
+                                "date_of_birth DATE NOT NULL, " +
                                 "gender TEXT NOT NULL, " +
                                 "owner TEXT NOT NULL)";
 
