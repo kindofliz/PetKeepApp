@@ -2,10 +2,12 @@ public class Pets {
 
     //Attributes
     private String name;
-    private String animalType;
+    private String animalType;   //Dog, cat, hamster, etc;
+    private String animalBreed;
     private String dateOfBirth;
-    private char gender;
-    private String owner;
+    private char gender;         //M/F
+    private int weight;
+    private String owner;        //Name
 
 
     //no-argument constructor
@@ -13,21 +15,22 @@ public class Pets {
     }
 
 
-    //methods
-
+    //METHODS
     @Override
     public String toString() {
         return "Pets{" +
                 "name='" + name + '\'' +
                 ", animalType='" + animalType + '\'' +
+                ", animalBreed='" + animalBreed + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", gender=" + gender +
+                ", weight=" + weight +
                 ", owner='" + owner + '\'' +
                 '}';
     }
 
 
-    //getters and setters
+    //GETTERS AND SETTERS
     public String getName() {
         return name;
     }
@@ -42,6 +45,14 @@ public class Pets {
 
     public void setAnimalType(String animalType) {
         this.animalType = animalType;
+    }
+
+    public String getAnimalBreed() {
+        return animalBreed;
+    }
+
+    public void setAnimalBreed(String animalBreed) {
+        this.animalBreed = animalBreed;
     }
 
     public String getDateOfBirth() {
@@ -60,6 +71,14 @@ public class Pets {
         this.gender = gender;
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     public String getOwner() {
         return owner;
     }
@@ -67,4 +86,9 @@ public class Pets {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
+
+
+
+
 }

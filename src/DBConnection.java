@@ -22,8 +22,10 @@ public class DBConnection {
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "name TEXT NOT NULL, " +
                                 "animal_type TEXT NOT NULL, " +
+                                "animal_breed TEXT NOT NULL, " +
                                 "date_of_birth DATE NOT NULL, " +
                                 "gender TEXT NOT NULL, " +
+                                "weight INTEGER NOT NULL, " +
                                 "owner TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
