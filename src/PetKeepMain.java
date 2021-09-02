@@ -34,7 +34,7 @@ public class PetKeepMain {
                     // Creating a new Pets object
                     Pets myPet = new Pets();
 
-                    //Asking user to input their pet's name with some validation
+                    // 1. Asking user to input their pet's name with some validation
                     String name;
                     int checkName = 0;
 
@@ -50,9 +50,31 @@ public class PetKeepMain {
                     } while (checkName == 0);
 
 
+                    // 2. Asking user to input their pet's type with some validation
+                    String type;
+                    int checkType = 0;
+
+                    do {
+                        System.out.println("What type of animal is it? (Dog, Cat, etc.");
+                        type = scanner.next();
+                        if (type.matches("[A-Z][a-zA-Z]*")) {
+                            myPet.setAnimalType(type);
+                            checkType = 1;
+                        } else {
+                            System.out.println("Invalid animal type.. try again.");
+                        }
+                    } while (checkType == 0);
+
+
+                    // 3. Asking user to input their pet's breed with some validation
+
+                    //..to be continued..
+
+
+
                     break;
                 case 2:
-                    // Add new hero to database
+
 
                     break;
                 case 3:
@@ -89,7 +111,9 @@ public class PetKeepMain {
 
                     break;
                 default:
-                    System.out.println("Menu item does not exist. Try again!");
+                    if (menuItem != 0)
+                        System.out.println("Menu item does not exist!");
+                    System.out.println();
             }
 
 
@@ -97,11 +121,8 @@ public class PetKeepMain {
         } while (menuItem != 0);
 
 
+
+
+
     }
-
-    public static void addPet() {
-
-    }
-
-
 }
