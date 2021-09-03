@@ -212,7 +212,7 @@ public class PetKeepMain {
         do {
             System.out.println("Enter your pet's breed:");
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            breed = scanner.nextLine();
+            breed = scanner.next();
             if (breed.matches("[a-zA-Z'\\s+]*")) {
                 myPet.setAnimalBreed(breed);
                 checkBreed = 1;
@@ -269,7 +269,7 @@ public class PetKeepMain {
         do {
             System.out.println("Enter owner's name: ");
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            owner = scanner.nextLine();
+            owner = scanner.next();
             if (owner.matches("[A-Z][a-zA-Z'.\\s+]*")) {
                 myPet.setOwner(owner);
                 checkOwner = 1;

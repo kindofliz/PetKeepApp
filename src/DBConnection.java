@@ -27,7 +27,7 @@ public class DBConnection {
                                 "date_of_birth TEXT NOT NULL, " +
                                 "gender TEXT NOT NULL, " +
                                 "weight REAL NOT NULL, " +
-                                "owner TEXT NOT NULL)";
+                                "owner TEXT NOT NULL )";
 
                 statement.execute(sqlStatement);
 
@@ -149,6 +149,7 @@ public class DBConnection {
                 pet.setGender(rs.getString("gender").charAt(0));
                 pet.setWeight(rs.getInt("weight"));
                 pet.setOwner(rs.getString("owner"));
+                System.out.println(pet.toString());
             }
 
 
@@ -175,7 +176,8 @@ public class DBConnection {
                     "'" + pet.getDateOfBirth() + "'," +
                     "'" + pet.getGender() + "'," +
                     "'" + pet.getWeight() + "'," +
-                    pet.getOwner() + ")";
+                    pet.getOwner() +
+                    ")";
 
             statement.execute(sqlStatement);
 
