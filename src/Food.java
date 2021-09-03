@@ -8,14 +8,13 @@ public class Food {
     private String foodPreferences;
     private String foodDislikes;
 
-    //no-argument constructor
 
-    public  Food () {
+    //no-argument constructor
+    public Food () {
     }
 
+
     //METHODS
-
-
     @Override
     public String toString() {
         return "Food{" +
@@ -28,9 +27,8 @@ public class Food {
                 '}';
     }
 
+
     //GETTERS AND SETTERS
-
-
     public String getFoodBrand() {
         return foodBrand;
     }

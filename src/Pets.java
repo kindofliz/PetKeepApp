@@ -1,12 +1,14 @@
+import java.util.Date;
+
 public class Pets {
 
     //Attributes
     private String name;
     private String animalType;   //Dog, cat, hamster, etc;
     private String animalBreed;
-    private String dateOfBirth;
+    private String dateOfBirth;  //dd/MM/yyyy
     private char gender;         //M/F
-    private int weight;
+    private double weight;       //in kg
     private String owner;        //Name
 
 
@@ -18,15 +20,15 @@ public class Pets {
     //METHODS
     @Override
     public String toString() {
-        return "Pets{" +
-                "name='" + name + '\'' +
-                ", animalType='" + animalType + '\'' +
-                ", animalBreed='" + animalBreed + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", gender=" + gender +
-                ", weight=" + weight +
-                ", owner='" + owner + '\'' +
-                '}';
+        return "PET || " +
+                "Name: '" + name + '\'' +
+                " | Animal Type: '" + animalType + '\'' +
+                " | Breed: '" + animalBreed + '\'' +
+                " | Birthday: '" + dateOfBirth + '\'' +
+                " | Gender: " + gender +
+                " | Weight (Kg): " + weight +
+                " | Owner: '" + owner + '\'' +
+                '|';
     }
 
 
@@ -71,11 +73,11 @@ public class Pets {
         this.gender = gender;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

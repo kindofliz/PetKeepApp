@@ -4,12 +4,13 @@ public class Medicine {
     private String nameOfMedicine;
     private  String regularityOfMedicine;
 
+
     //no-argument constructor
     public Medicine () {
     }
 
-    //METHODS
 
+    //METHODS
     @Override
     public String toString() {
         return "Medicine{" +
@@ -18,9 +19,8 @@ public class Medicine {
                 '}';
     }
 
+
     //GETTERS AND SETTERS
-
-
     public String getNameOfMedicine() {
         return nameOfMedicine;
     }

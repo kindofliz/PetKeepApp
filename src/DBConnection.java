@@ -25,7 +25,7 @@ public class DBConnection {
                                 "animal_breed TEXT NOT NULL, " +
                                 "date_of_birth DATE NOT NULL, " +
                                 "gender TEXT NOT NULL, " +
-                                "weight INTEGER NOT NULL, " +
+                                "weight REAL NOT NULL, " +
                                 "owner TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);

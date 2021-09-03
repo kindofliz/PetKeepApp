@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class PetKeepMain {
@@ -9,9 +10,9 @@ public class PetKeepMain {
         int menuItem;
 
         do {
-            System.out.println("~~~~");
+            System.out.println("~~~~~~~");
             System.out.println("HELLO");
-            System.out.println("~~~~");
+            System.out.println("~~~~~~~");
             System.out.println("CHOOSE YOUR OPTION");
             System.out.println("1. - ADD A PET");
             System.out.println("2. - SEE THE LIST OF PETS");
@@ -20,7 +21,7 @@ public class PetKeepMain {
             System.out.println("5. - SEE INFORMATION ABOUT MEDICINE");
             System.out.println("6. - ADD FOOD INFORMATION");
             System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
-            System.out.println("8. - ADD A NEW VACCINE FOR A PET");
+            System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //how to make this happen for each pet separately?
             System.out.println("9. - ADD INFO ABOUT ALLERGIES");
             System.out.println("10. - DELETE MEDICINE FOR A PET");
             System.out.println("11. - DELETE VACCINE FOR A PET");
@@ -39,9 +40,9 @@ public class PetKeepMain {
                     int checkName = 0;
 
                     do {
-                        System.out.println("Enter your pet's name");
+                        System.out.println("Enter your pet's name:");
                         name = scanner.next();
-                        if (name.matches("[A-Z][a-zA-Z]*")) {
+                        if (name.matches("[A-Z][a-zA-Z']*")) {
                             myPet.setName(name);
                             checkName = 1;
                         } else {
@@ -55,9 +56,9 @@ public class PetKeepMain {
                     int checkType = 0;
 
                     do {
-                        System.out.println("What type of animal is it? (Dog, Cat, etc.");
-                        type = scanner.next();
-                        if (type.matches("[A-Z][a-zA-Z]*")) {
+                        System.out.println("What type of animal is it? (Dog, Cat, etc.)");
+                        type = scanner.next().toUpperCase(Locale.ROOT);
+                        if (type.matches("[a-zA-Z]*")) {
                             myPet.setAnimalType(type);
                             checkType = 1;
                         } else {
@@ -67,19 +68,170 @@ public class PetKeepMain {
 
 
                     // 3. Asking user to input their pet's breed with some validation
+                    String breed;
+                    int checkBreed = 0;
 
-                    //..to be continued..
+                    do {
+                        System.out.println("Enter your pet's breed:");
+                        scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+                        breed = scanner.nextLine();
+                        if (breed.matches("[a-zA-Z'\\s+]*")) {
+                            myPet.setAnimalBreed(breed);
+                            checkBreed = 1;
+                        } else {
+                            System.out.println("Invalid breed.. try again.");
+                        }
+                    } while (checkBreed == 0);
 
 
+                    // 4. Asking user to input their pet's birthday
+                    String dateOfBirth;
+                    int checkDate = 0;
+
+                    do {
+                        System.out.println("Enter your pet's birthday (dd/mm/yyyy):");
+                        dateOfBirth = scanner.next();
+                        if (dateOfBirth.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                            myPet.setDateOfBirth(dateOfBirth);
+                            checkDate = 1;
+                        } else {
+                            System.out.println("Invalid date format.. try again.");
+                            System.out.println();
+                        }
+                    } while (checkDate == 0);
+
+
+                    // 5. Asking user to input their pet's gender
+                    System.out.println("Is your pet male (M) or female (F)?");
+                    char gender = scanner.next().toUpperCase(Locale.ROOT).charAt(0);
+                    myPet.setGender(gender);
+
+
+                    // 6. Asking user to input their pet's weight
+                    double weight;
+                    int checkWeight = 0;
+
+                    do {
+                        System.out.println("Your pet's weight (kg): ");
+                        weight = scanner.nextDouble();
+                        if (weight > 0) {
+                            myPet.setWeight(weight);
+                            checkWeight = 1;
+                        } else {
+                            System.out.println("Invalid weight.. try again.");
+                            System.out.println();
+                        }
+                    } while (checkWeight == 0);
+
+
+                    // 7. Asking user to input their pet's owner
+                    String owner;
+                    int checkOwner = 0;
+
+                    do {
+                        System.out.println("Enter owner's name: ");
+                        scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+                        owner = scanner.nextLine();
+                        if (owner.matches("[A-Z][a-zA-Z'.\\s+]*")) {
+                            myPet.setOwner(owner);
+                            checkOwner = 1;
+                        } else {
+                            System.out.println("Invalid owner's name.. try again.");
+                        }
+                    } while (checkOwner == 0);
+
+
+                    System.out.println("TEST: ");
+                    System.out.println(myPet);
+                    System.out.println();
+
+                    //Calling the method that inserts this into database
+//                    petKeepDb.createPets(myPet);
 
                     break;
                 case 2:
+                    System.out.println("================= LIST OF PETS ================");
+                    //Need to create a method in DBConnection to get only names from the table
+                    //And call it here
+//                    petKeepDb.getPetNames();
 
+                    //Method to show all pet names to be located in DBConnections?
+//                    public ArrayList<Pets> getPetNames() {
+//
+//                    ArrayList<Pets> petList = new ArrayList<Pets>();
+//
+//                    try {
+//
+//                        Statement statement = conn.createStatement();
+//                        String sqlStatement = "SELECT name FROM pets";
+//
+//                        ResultSet rs = statement.executeQuery(sqlStatement);
+//
+//                        while (rs.next()) {
+//                            //Create a new Pets object
+//                            Pets pet = new Pets();
+//                            myPet.setName(rs.getString("name"));
+//
+//                            System.out.println(pet.getName());
+//                        }
+//
+//
+//                    } catch (SQLException exception) {
+//                        System.out.println("Error getting Heroes list: " + exception);
+//                    }
+//                    return petList;
+//                }
+
+                    System.out.println("================= LIST OF PETS ================");
+                    System.out.println();
 
                     break;
                 case 3:
 
-                    break;
+                    System.out.println("Enter a name from the pet list: ");
+                    //Calling the method to SELECT all the info about chosen pet from DB
+//                    petKeepDb.getOnePet();
+                    System.out.println();
+
+                    //Method located in DBConnections?
+//                    public ArrayList<Pets> getOnePet() {
+//
+//                    ArrayList<Pets> petJustOne= new ArrayList<Pets>();
+//
+//                    try {
+//
+//                        Statement statement = conn.createStatement();
+//                        String sqlStatement = "SELECT * FROM pets WHERE name = " + "\'" + scanner.next() + "\'";
+//
+//                        ResultSet rs = statement.executeQuery(sqlStatement);
+//
+//                        while (rs.next()) {
+//                            //Create a new Hero object
+//                            Pets pet = new Pets();
+//                            pet.setName(rs.getString("name"));
+//                            pet.setAnimalType(rs.getString("animal_type"));
+//                            pet.setAnimalBreed(rs.getString("animal_breed"));
+//                            pet.setDateOfBirth(rs.getString("date_of_birth"));
+//                            pet.setGender(rs.getString("gender").charAt(0));
+//                            pet.setWeight(rs.getDouble("weight"));
+//                            pet.setOwner(rs.getString("owner"));
+//
+//
+//                            System.out.println(pet.toString());
+//                        }
+//
+//
+//
+//                    } catch (SQLException exception) {
+//                        System.out.println("Error getting Heroes list: " + exception);
+//                    }
+//
+//                    return petJustOne;
+//                }
+
+
+
+                break;
                 case 4:
 
                     break;
@@ -117,11 +269,7 @@ public class PetKeepMain {
             }
 
 
-
         } while (menuItem != 0);
-
-
-
 
 
     }
