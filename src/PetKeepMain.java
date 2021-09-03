@@ -2,6 +2,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class PetKeepMain {
+
     public static void main(String[] args) {
 
         DBConnection petKeepDb = new DBConnection();
@@ -44,42 +45,13 @@ public class PetKeepMain {
                     System.out.println(myPet);
                     System.out.println("****************");
 
-                    //Calling the method that inserts this into database (needs to be created)
-//                    petKeepDb.createPets(myPet);
+                    petKeepDb.createPet(myPet);
 
                     break;
                 case 2:
                     System.out.println("================= LIST OF PETS ================");
-                    //Need to create a method in DBConnection to get only names from the table
-                    //And call it here
-//                    petKeepDb.getPetNames();
 
-                    //Method to show all pet names. to be located in DBConnections?
-//                    public ArrayList<Pets> getPetNames() {
-//
-//                    ArrayList<Pets> petList = new ArrayList<Pets>();
-//
-//                    try {
-//
-//                        Statement statement = conn.createStatement();
-//                        String sqlStatement = "SELECT name FROM pets";
-//
-//                        ResultSet rs = statement.executeQuery(sqlStatement);
-//
-//                        while (rs.next()) {
-//                            //Create a new Pets object
-//                            Pets pet = new Pets();
-//                            myPet.setName(rs.getString("name"));
-//
-//                            System.out.println(pet.getName());
-//                        }
-//
-//
-//                    } catch (SQLException exception) {
-//                        System.out.println("Error getting Heroes list: " + exception);
-//                    }
-//                    return petList;
-//                }
+                    petKeepDb.seeAllPets();
 
                     System.out.println("================= LIST OF PETS ================");
                     System.out.println();
@@ -131,6 +103,7 @@ public class PetKeepMain {
 
                     break;
                 case 4:
+
 
                     break;
                 case 5:
@@ -278,6 +251,7 @@ public class PetKeepMain {
                 System.out.println("Invalid owner's name.. try again.");
             }
         } while (checkOwner == 0);
+
     }
 
 
