@@ -45,14 +45,13 @@ public class PetKeepMain {
                     System.out.println("****************");
 
                     //Calling the method that inserts this into database (needs to be created)
-//                    petKeepDb.createPets(myPet);
+                    petKeepDb.createPet(myPet);
 
                     break;
                 case 2:
                     System.out.println("================= LIST OF PETS ================");
                     //Need to create a method in DBConnection to get only names from the table
-                    //And call it here
-//                    petKeepDb.getPetNames();
+                    petKeepDb.seeAllPets();
 
                     //Method to show all pet names. to be located in DBConnections?
 //                    public ArrayList<Pets> getPetNames() {
