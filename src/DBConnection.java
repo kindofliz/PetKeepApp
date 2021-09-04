@@ -32,13 +32,13 @@ public class DBConnection {
                 statement.execute(sqlStatement);
 
 
-                //INTERMEDIATE MANY TO MANY TABLE pets vaccines
+                //INTERMEDIATE MANY TO MANY TABLE pets+vaccines
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS pets_vaccines" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "pet_id INTEGER NOT NULL, " +
                                 "vaccine_id INTEGER NOT NULL, " +
-                                "vaccination_date TEXT NOT NULL)";
+                                "date_to_vaccinate_next TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
 
@@ -47,8 +47,9 @@ public class DBConnection {
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS vaccines" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "name TEXT NOT NULL, " +
-                                "vaccination_regularity INTEGER NOT NULL)";
+                                "vaccination_type TEXT NOT NULL, " +
+                                "date_vaccinated TEXT NOT NULL, " +
+                                "date_to_vaccinate_next TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
 
@@ -58,22 +59,20 @@ public class DBConnection {
                         "CREATE TABLE IF NOT EXISTS food" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "food_brand TEXT NOT NULL, " +
-                                "food_weight_bag REAL NOT NULL, " +
+                                "food_bag_weight INTEGER NOT NULL, " +
                                 "daily_amount INTEGER NOT NULL, " +
-                                "date_bought TEXT NOT NULL, " +
-                                "preferences TEXT, " +
-                                "dislikes TEXT)";
+                                "purchase_date TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
 
 
-                //INTERMEDIATE MANY TO MANY TABLE pets food
+                //INTERMEDIATE MANY TO MANY TABLE pets+food
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS pets_food" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "pet_id INTEGER NOT NULL, " +
                                 "food_id INTEGER NOT NULL, " +
-                                "daily_amount REAL NOT NULL)";
+                                "daily_amount INTEGER NOT NULL)";
 
                 statement.execute(sqlStatement);
 
@@ -82,47 +81,28 @@ public class DBConnection {
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS medicine" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "name TEXT NOT NULL, " +
-                                "regularity INTEGER NOT NULL)";
+                                "type_of_meds TEXT NOT NULL, " +
+                                "regularity INTEGER NOT NULL, " +
+                                "date_given TEXT NOT NULL, " +
+                                "date_to_give_next TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
 
 
-                //INTERMEDIATE MANY TO MANY TABLE pets medicine
+                //INTERMEDIATE MANY TO MANY TABLE pets+medicine
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS pets_medicine" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
                                 "pet_id INTEGER NOT NULL, " +
-                                "medicine_id INTEGER NOT NULL)";
+                                "medicine_id INTEGER NOT NULL, " +
+                                "date_to_give_next TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
-
-
-                // CREATING A TABLE FOR ALLERGIES
-                sqlStatement =
-                        "CREATE TABLE IF NOT EXISTS allergies" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "food TEXT, " +
-                                "medicine TEXT, " +
-                                "other TEXT)";
-
-                statement.execute(sqlStatement);
-
-
-                //INTERMEDIATE MANY TO MANY TABLE pets allergies
-                sqlStatement =
-                        "CREATE TABLE IF NOT EXISTS pets_allergies" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "pet_id INTEGER NOT NULL, " +
-                                "allergies_id INTEGER NOT NULL)";
-
-                statement.execute(sqlStatement);
-
 
             }
 
         } catch (SQLException exception) {
-            System.out.println("Database issues" + exception);
+            System.out.println("Database issues " + exception);
         }
     }
 
@@ -149,6 +129,7 @@ public class DBConnection {
                 pet.setGender(rs.getString("gender").charAt(0));
                 pet.setWeight(rs.getInt("weight"));
                 pet.setOwner(rs.getString("owner"));
+
                 System.out.println(pet.toString());
             }
 
@@ -156,7 +137,6 @@ public class DBConnection {
         } catch (SQLException exception) {
             System.out.println("Error getting Pet list: " + exception);
         }
-
 
         return allPets;
     }
@@ -175,8 +155,8 @@ public class DBConnection {
                     "'" + pet.getAnimalBreed() + "'," +
                     "'" + pet.getDateOfBirth() + "'," +
                     "'" + pet.getGender() + "'," +
-                    "'" + pet.getWeight() + "'," +
-                    pet.getOwner() +
+                    + pet.getWeight() + "," +
+                    "'" + pet.getOwner() + "'" +
                     ")";
 
             statement.execute(sqlStatement);
@@ -197,13 +177,13 @@ public class DBConnection {
 //            ResultSet resultSet = statement.executeQuery(sqlStatement);
 //
 //            sqlStatement =
-//                    "SELECT pets.name AS pet_Name, vaccines.name AS vaccine_Title, pets_vaccines.vaccination_date AS next_Vaccination  " +
+//                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
 //                            " FROM pets  " +
 //                            " LEFT JOIN pets_vaccines  " +
 //                            " ON pets_vaccines.pet_id = pets.id " +
 //                            " LEFT JOIN vaccines " +
 //                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
-//                            " ORDER BY pets_vaccines.vaccination_date";
+//                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
 //
 //            resultSet = statement.executeQuery(sqlStatement);
 //

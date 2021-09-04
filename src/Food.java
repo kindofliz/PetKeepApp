@@ -3,10 +3,8 @@ public class Food {
     //Attributes
     private String foodBrand;
     private int foodBagWeight;
-    private int dailyAmount;
+    private int dailyAmount; //in grams
     private String purchaseDate;
-    private String foodPreferences;
-    private String foodDislikes;
 
 
     //no-argument constructor
@@ -22,8 +20,6 @@ public class Food {
                 ", foodBagWeight=" + foodBagWeight +
                 ", dailyAmount=" + dailyAmount +
                 ", purchaseDate='" + purchaseDate + '\'' +
-                ", foodPreferences='" + foodPreferences + '\'' +
-                ", foodDislikes='" + foodDislikes + '\'' +
                 '}';
     }
 
@@ -59,22 +55,6 @@ public class Food {
 
     public void setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
-    }
-
-    public String getFoodPreferences() {
-        return foodPreferences;
-    }
-
-    public void setFoodPreferences(String foodPreferences) {
-        this.foodPreferences = foodPreferences;
-    }
-
-    public String getFoodDislikes() {
-        return foodDislikes;
-    }
-
-    public void setFoodDislikes(String foodDislikes) {
-        this.foodDislikes = foodDislikes;
     }
 
 

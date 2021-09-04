@@ -1,8 +1,10 @@
 public class Medicine {
 
     //Attributes
-    private String nameOfMedicine;
-    private  String regularityOfMedicine;
+    private String typeOfMeds;  //Tick and Flea prevention (Nexgard)
+    private int regularity; //in months
+    private String dateGiven;
+    private String dateToGiveNext;
 
 
     //no-argument constructor
@@ -10,30 +12,39 @@ public class Medicine {
     }
 
 
-    //METHODS
+    //TO-STRING METHOD
     @Override
     public String toString() {
         return "Medicine{" +
-                "nameOfMedicine='" + nameOfMedicine + '\'' +
-                ", regularityOfMedicine='" + regularityOfMedicine + '\'' +
+                "typeOfMeds='" + typeOfMeds + '\'' +
+                ", dateGiven='" + dateGiven + '\'' +
+                ", dateToGiveNext='" + dateToGiveNext + '\'' +
                 '}';
     }
 
 
     //GETTERS AND SETTERS
     public String getNameOfMedicine() {
-        return nameOfMedicine;
+        return typeOfMeds;
     }
 
     public void setNameOfMedicine(String nameOfMedicine) {
-        this.nameOfMedicine = nameOfMedicine;
+        this.typeOfMeds = nameOfMedicine;
     }
 
-    public String getRegularityOfMedicine() {
-        return regularityOfMedicine;
+    public String getDateGiven() {
+        return dateGiven;
     }
 
-    public void setRegularityOfMedicine(String regularityOfMedicine) {
-        this.regularityOfMedicine = regularityOfMedicine;
+    public void setDateGiven(String dateGiven) {
+        this.dateGiven = dateGiven;
+    }
+
+    public String getDateToGiveNext() {
+        return dateToGiveNext;
+    }
+
+    public void setDateToGiveNext(String dateToGiveNext) {
+        this.dateToGiveNext = dateToGiveNext;
     }
 }

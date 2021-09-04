@@ -15,11 +15,11 @@ public class PetKeepMain {
             System.out.println("HELLO");
             System.out.println("~~~~~~~");
             System.out.println("CHOOSE YOUR OPTION");
-            System.out.println("1. - ADD A PET");
-            System.out.println("2. - SEE THE LIST OF PETS");
-            System.out.println("3. - SEE INFORMATION ABOUT A PET");
+            System.out.println("1. - ADD A NEW PET");
+            System.out.println("2. - SEE LIST OF PETS");
+            System.out.println("3. - SEE A PET'S PROFILE");
             System.out.println("4. - SEE THE VACCINATION SCHEDULE");
-            System.out.println("5. - SEE INFORMATION ABOUT MEDICINE");
+            System.out.println("5. - SEE MEDICATION SCHEDULE");
             System.out.println("6. - ADD FOOD INFORMATION");
             System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
             System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //how to make this happen for each pet separately?
