@@ -2,7 +2,6 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class PetKeepMain {
-
     public static void main(String[] args) {
 
         DBConnection petKeepDb = new DBConnection();
@@ -16,11 +15,11 @@ public class PetKeepMain {
             System.out.println("HELLO");
             System.out.println("~~~~~~~");
             System.out.println("CHOOSE YOUR OPTION");
-            System.out.println("1. - ADD A PET");
-            System.out.println("2. - SEE THE LIST OF PETS");
-            System.out.println("3. - SEE INFORMATION ABOUT A PET");
+            System.out.println("1. - ADD A NEW PET");
+            System.out.println("2. - SEE LIST OF PETS");
+            System.out.println("3. - SEE A PET'S PROFILE");
             System.out.println("4. - SEE THE VACCINATION SCHEDULE");
-            System.out.println("5. - SEE INFORMATION ABOUT MEDICINE");
+            System.out.println("5. - SEE MEDICATION SCHEDULE");
             System.out.println("6. - ADD FOOD INFORMATION");
             System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
             System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //how to make this happen for each pet separately?
@@ -45,13 +44,41 @@ public class PetKeepMain {
                     System.out.println(myPet);
                     System.out.println("****************");
 
+                    //Calling the method that inserts this into database (needs to be created)
                     petKeepDb.createPet(myPet);
 
                     break;
                 case 2:
                     System.out.println("================= LIST OF PETS ================");
-
+                    //Need to create a method in DBConnection to get only names from the table
                     petKeepDb.seeAllPets();
+
+                    //Method to show all pet names. to be located in DBConnections?
+//                    public ArrayList<Pets> getPetNames() {
+//
+//                    ArrayList<Pets> petList = new ArrayList<Pets>();
+//
+//                    try {
+//
+//                        Statement statement = conn.createStatement();
+//                        String sqlStatement = "SELECT name FROM pets";
+//
+//                        ResultSet rs = statement.executeQuery(sqlStatement);
+//
+//                        while (rs.next()) {
+//                            //Create a new Pets object
+//                            Pets pet = new Pets();
+//                            myPet.setName(rs.getString("name"));
+//
+//                            System.out.println(pet.getName());
+//                        }
+//
+//
+//                    } catch (SQLException exception) {
+//                        System.out.println("Error getting Heroes list: " + exception);
+//                    }
+//                    return petList;
+//                }
 
                     System.out.println("================= LIST OF PETS ================");
                     System.out.println();
@@ -103,7 +130,6 @@ public class PetKeepMain {
 
                     break;
                 case 4:
-
 
                     break;
                 case 5:
@@ -186,7 +212,7 @@ public class PetKeepMain {
         do {
             System.out.println("Enter your pet's breed:");
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            breed = scanner.nextLine();
+            breed = scanner.next();
             if (breed.matches("[a-zA-Z'\\s+]*")) {
                 myPet.setAnimalBreed(breed);
                 checkBreed = 1;
@@ -243,7 +269,7 @@ public class PetKeepMain {
         do {
             System.out.println("Enter owner's name: ");
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            owner = scanner.nextLine();
+            owner = scanner.next();
             if (owner.matches("[A-Z][a-zA-Z'.\\s+]*")) {
                 myPet.setOwner(owner);
                 checkOwner = 1;
@@ -251,7 +277,6 @@ public class PetKeepMain {
                 System.out.println("Invalid owner's name.. try again.");
             }
         } while (checkOwner == 0);
-
     }
 
 

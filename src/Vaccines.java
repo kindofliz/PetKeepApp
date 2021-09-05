@@ -1,8 +1,9 @@
 public class Vaccines {
 
     //Attributes
-    private String nameOfVaccine;  // maybe better to mention what the vaccine is for and make brand as part of this string
-    private String regularityOfVaccine;  // next date or period that vaccine is valid ?
+    private String vaccinationType;  //e.g. Annual
+    private String dateVaccinated;
+    private String dateToVaccinateNext;
 
 
     //no-argument constructor
@@ -14,26 +15,36 @@ public class Vaccines {
     @Override
     public String toString() {
         return "Vaccines{" +
-                "nameOfVaccine='" + nameOfVaccine + '\'' +
-                ", regularity='" + regularityOfVaccine + '\'' +
+                "vaccinationType='" + vaccinationType + '\'' +
+                ", dateVaccinated='" + dateVaccinated + '\'' +
+                ", dateToVaccinateNext='" + dateToVaccinateNext + '\'' +
                 '}';
     }
 
 
     //GETTERS AND SETTERS
-    public String getNameOfVaccine() {
-        return nameOfVaccine;
+
+    public String getVaccinationType() {
+        return vaccinationType;
     }
 
-    public void setNameOfVaccine(String nameOfVaccine) {
-        this.nameOfVaccine = nameOfVaccine;
+    public void setVaccinationType(String vaccinationType) {
+        this.vaccinationType = vaccinationType;
     }
 
-    public String getRegularity() {
-        return regularityOfVaccine;
+    public String getDateVaccinated() {
+        return dateVaccinated;
     }
 
-    public void setRegularity(String regularity) {
-        this.regularityOfVaccine = regularity;
+    public void setDateVaccinated(String dateVaccinated) {
+        this.dateVaccinated = dateVaccinated;
+    }
+
+    public String getDateToVaccinateNext() {
+        return dateToVaccinateNext;
+    }
+
+    public void setDateToVaccinateNext(String dateToVaccinateNext) {
+        this.dateToVaccinateNext = dateToVaccinateNext;
     }
 }
