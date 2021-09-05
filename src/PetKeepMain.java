@@ -23,11 +23,10 @@ public class PetKeepMain {
             System.out.println("6. - ADD FOOD INFORMATION");
             System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
             System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //how to make this happen for each pet separately?
-            System.out.println("9. - ADD INFO ABOUT ALLERGIES");
-            System.out.println("10. - DELETE MEDICINE FOR A PET");
-            System.out.println("11. - DELETE VACCINE FOR A PET");
-            System.out.println("12. - DELETE FOOD FOR A PET");
-            System.out.println("13. - DELETE A PET :(");
+            System.out.println("9. - DELETE MEDICINE FOR A PET");
+            System.out.println("10. - DELETE VACCINE FOR A PET");
+            System.out.println("11. - DELETE FOOD FOR A PET");
+            System.out.println("12. - DELETE A PET :(");
             System.out.println("0. - EXIT");
             menuItem = scanner.nextInt();
 
@@ -131,14 +130,53 @@ public class PetKeepMain {
                     break;
                 case 4:
 
+                    //                    ResultSet resultSet = statement.executeQuery("SELECT * from foo");
+                    //ResultSetMetaData rsmd = resultSet.getMetaData();
+                    //int columnsNumber = rsmd.getColumnCount();
+                    //while (resultSet.next()) {
+                    //    for (int i = 1; i <= columnsNumber; i++) {
+                    //        if (i > 1) System.out.print(",  ");
+                    //        String columnValue = resultSet.getString(i);
+                    //        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                    //    }
+                    //    System.out.println("");
+                    //}
+
                     break;
                 case 5:
 
                     break;
                 case 6:
+//                    6. - ADD FOOD INFORMATION
+                    // Creating a new Food object
+                    Food foodInfo = new Food();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addFood(scanner, foodInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(foodInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createFood(foodInfo);
 
                     break;
                 case 7:
+
+                    Medicine medicineInfo = new Medicine();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addMedicine(scanner, medicineInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(medicineInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createMedicine(medicineInfo);
 
                     break;
                 case 8:
@@ -277,6 +315,159 @@ public class PetKeepMain {
                 System.out.println("Invalid owner's name.. try again.");
             }
         } while (checkOwner == 0);
+    }
+
+    public static void addFood(Scanner scanner, Food foodInfo) {
+//
+//////             private String foodBrand;
+//////    private int foodBagWeight;
+//////    private int dailyAmount; //in grams
+//////    private String purchaseDate;
+//
+//        // 1. Asking user to input their Food brand with some validation
+        String foodBrand;
+        int checkBrand = 0;
+
+        do {
+            System.out.println("Enter your food brand you bought:");
+            foodBrand = scanner.next();
+            if (foodBrand.matches("[A-Z][a-zA-Z']*")) {
+                foodInfo.setFoodBrand(foodBrand);
+                checkBrand = 1;
+            } else {
+                System.out.println("Invalid food brand.. try again.");
+            }
+        } while (checkBrand == 0);
+
+//
+//        // 2. Asking user to input food bag weight with some validation
+        int foodBagWeight = 0;
+        String foodBagWeightAsString = String.valueOf(foodBagWeight);
+        int checkWeight = 0;
+
+        do {
+            System.out.println("Enter food bag weight (g):");
+            foodBagWeightAsString = scanner.next();
+            if (foodBagWeightAsString.matches("[0-9]")) {
+                foodInfo.setFoodBagWeight(foodBagWeight);
+                checkWeight = 1;
+            } else {
+                System.out.println("Invalid food bag weight.. try again.");
+            }
+        } while (checkWeight == 0);
+
+//
+//        // 3. Asking user to input daily amount with some validation
+        int dailyAmount = 0;
+        String dailyAmountAsString = String.valueOf(dailyAmount);
+        int checkAmount = 0;
+
+        do {
+            System.out.println("Enter food bag weight:");
+            dailyAmountAsString = scanner.next();
+            if (dailyAmountAsString.matches("[0-9]")) {
+                foodInfo.setDailyAmount(dailyAmount);
+                checkAmount = 1;
+            } else {
+                System.out.println("Invalid food bag weight.. try again.");
+            }
+        } while (checkAmount == 0);
+
+//
+//        // 4. Asking user to input purchase date
+        String dateOfPurchase;
+        int checkDate = 0;
+
+        do {
+            System.out.println("Enter purchase date (dd/mm/yyyy):");
+            dateOfPurchase = scanner.next();
+
+//            regex needs to be checked
+
+            if (dateOfPurchase.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                foodInfo.setPurchaseDate(dateOfPurchase);
+                checkDate = 1;
+            } else {
+                System.out.println("Invalid date format.. try again.");
+                System.out.println();
+            }
+        } while (checkDate == 0);
+
+    }
+
+    public static void addMedicine(Scanner scanner, Medicine medicineInfo) {
+
+//  private String typeOfMeds;  //Tick and Flea prevention (Nexgard)
+//    private int regularity; //in months
+//    private String dateGiven;
+//    private String dateToGiveNext;
+
+        // 1. Asking user to input their name of medicine with some validation
+        String typeOfMeds;
+        int checkType = 0;
+
+        do {
+            System.out.println("Enter name of the medicine:");
+            typeOfMeds = scanner.next();
+            if (typeOfMeds.matches("[A-Z][a-zA-Z']*")) {
+                medicineInfo.setNameOfMedicine(typeOfMeds);
+                checkType = 1;
+            } else {
+                System.out.println("Invalid medicine name.. try again.");
+            }
+        } while (checkType == 0);
+
+
+        // 2. Asking user to input regularity with some validation
+        int regularity = 0;
+        String regularityAsString = String.valueOf(regularity);
+        int checkRegularity = 0;
+
+        do {
+            System.out.println("Enter regularity (in months):");
+            regularityAsString = scanner.next();
+            if (regularityAsString.matches("[0-9]")) {
+                medicineInfo.setRegularity(regularity);
+                checkRegularity = 1;
+            } else {
+                System.out.println("Insert regularity in months.. try again.");
+            }
+        } while (checkRegularity == 0);
+
+
+        // 3. Asking user to input first date given with some validation
+        String dateGiven;
+        int checkDate = 0;
+
+        do {
+            System.out.println("Enter first date medicine was given (dd/mm/yyyy):");
+            dateGiven = scanner.next();
+            if (dateGiven.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                medicineInfo.setDateGiven(dateGiven);
+                checkDate = 1;
+            } else {
+                System.out.println("Invalid date format.. try again.");
+            }
+        } while (checkDate == 0);
+
+
+        // 4. Asking user to input next date to give medicine
+        String dateToGiveNext;
+        int checkNextDate = 0;
+
+        do {
+            System.out.println("Enter next date to give medicine (dd/mm/yyyy):");
+            dateToGiveNext = scanner.next();
+//            regex needs to be checked
+            if (dateToGiveNext.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                medicineInfo.setDateToGiveNext(dateToGiveNext);
+                checkNextDate = 1;
+            } else {
+                System.out.println("Invalid date format.. try again.");
+                System.out.println();
+            }
+        } while (checkNextDate == 0);
+
     }
 
 

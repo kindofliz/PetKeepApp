@@ -106,7 +106,7 @@ public class DBConnection {
         }
     }
 
-    //method for seeing all Pets
+    // method for seeing all Pets
     public ArrayList<Pets> seeAllPets() {
 
         ArrayList<Pets> allPets = new ArrayList<Pets>();
@@ -141,7 +141,7 @@ public class DBConnection {
         return allPets;
     }
 
-
+    // method for creating a pet
     public void createPet(Pets pet) {
 
         try {
@@ -155,8 +155,8 @@ public class DBConnection {
                     "'" + pet.getAnimalBreed() + "'," +
                     "'" + pet.getDateOfBirth() + "'," +
                     "'" + pet.getGender() + "'," +
-                    + pet.getWeight() + "," +
-                    "'" + pet.getOwner() + "'" +
+                    "'" + pet.getWeight() + "'," +
+                    "'" + pet.getOwner() + "'," +
                     ")";
 
             statement.execute(sqlStatement);
@@ -164,42 +164,98 @@ public class DBConnection {
         } catch (SQLException exception) {
             System.out.println("Error creating a Pet : " + exception);
         }
-
-//    public ArrayList<Pets> seeVaccinationSchedule() {
-//
-//        ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
-//
-//        try {
-//            Statement statement = conn.createStatement();
-//            String sqlStatement;
-//
-//            sqlStatement = "SELECT * FROM pets";
-//            ResultSet resultSet = statement.executeQuery(sqlStatement);
-//
-//            sqlStatement =
-//                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
-//                            " FROM pets  " +
-//                            " LEFT JOIN pets_vaccines  " +
-//                            " ON pets_vaccines.pet_id = pets.id " +
-//                            " LEFT JOIN vaccines " +
-//                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
-//                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
-//
-//            resultSet = statement.executeQuery(sqlStatement);
-//
-//            while (resultSet.next()) {
-//                String petsName = resultSet.getString("pet_Name");
-//                String vaccineTitle = resultSet.getString("vaccine_Title");
-//                String nextVaccination = resultSet.getString("next_Vaccination");
-//
-//                System.out.println("");
-//            }
-//        } catch (SQLException exception) {
-//
-//            System.out.println("Error getting vaccination list " + exception);
-//
-//        }
-//    }
     }
 
-}
+    public ArrayList<Pets> seeVaccinationSchedule() {
+
+        ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet = statement.executeQuery(sqlStatement);
+
+            sqlStatement =
+                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
+                            " FROM pets  " +
+                            " LEFT JOIN pets_vaccines  " +
+                            " ON pets_vaccines.pet_id = pets.id " +
+                            " LEFT JOIN vaccines " +
+                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
+                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+                String petsName = resultSet.getString("pet_Name");
+                String vaccineTitle = resultSet.getString("vaccine_Title");
+                String nextVaccination = resultSet.getString("next_Vaccination");
+
+
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting vaccination list " + exception);
+
+        }
+        return petsVaccinations;
+    }
+
+
+    //   method for creating food
+    public void createFood(Food food) {
+
+        try {
+
+//                  "food_brand TEXT NOT NULL, " +
+//                                "food_bag_weight INTEGER NOT NULL, " +
+//                                "daily_amount INTEGER NOT NULL, " +
+//                                "purchase_date TEXT NOT NULL)";
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO food (" +
+                    "food_brand, food_bag_weight, daily_amount, purchase_date) " +
+                    "VALUES (" +
+                    "'" + food.getFoodBrand() + "'," +
+                    "'" + food.getFoodBagWeight() + "'," +
+                    "'" + food.getDailyAmount() + "'," +
+                    "'" + food.getPurchaseDate() + "'," +
+                    ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Food info : " + exception);
+        }
+    }
+
+    // method for creating medicine
+    public void createMedicine(Medicine medicine) {
+
+        try {
+
+//    "type_of_meds TEXT NOT NULL, " +
+//                                "regularity INTEGER NOT NULL, " +
+//                                "date_given TEXT NOT NULL, " +
+//                                "date_to_give_next TEXT NOT NULL)";
+
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO medicine (" +
+                    "type_of_meds, regularity, date_given, date_to_give_next) " +
+                    "VALUES (" +
+                    "'" + medicine.getNameOfMedicine() + "'," +
+                    "'" + medicine.getRegularity() + "'," +
+                    "'" + medicine.getDateGiven() + "'," +
+                    "'" + medicine.getDateToGiveNext() + "'," +
+                    ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Medicine info : " + exception);
+        }
+    }
+    }

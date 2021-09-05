@@ -47,4 +47,8 @@ public class Medicine {
     public void setDateToGiveNext(String dateToGiveNext) {
         this.dateToGiveNext = dateToGiveNext;
     }
+
+    public int getRegularity() { return regularity; }
+
+    public void setRegularity(int regularity) { this.regularity = regularity; }
 }
