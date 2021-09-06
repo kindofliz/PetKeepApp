@@ -284,6 +284,7 @@ public class DBConnection {
                     "SELECT pets.name AS pet_name, vaccines.vaccination_type AS vaccine_type, vaccines.date_to_vaccinate_next AS next_vaccination " +
                             " FROM pets  " +
                             " JOIN vaccines  " +
+                            " ON pets.id = vaccines.id " +
                             " ORDER BY vaccines.date_to_vaccinate_next";
 
             resultSet = statement.executeQuery(sqlStatement);
@@ -294,7 +295,7 @@ public class DBConnection {
                 String nextVaccination = resultSet.getString("next_vaccination");
 
 
-                System.out.println(petsName.toUpperCase(Locale.ROOT) + ": |Vaccine|: " + "\'" + vaccineTitle + "\'" + " |Next vaccination date|: " + "\'" + nextVaccination + "\'");
+                System.out.println("Next vaccination date: " + "|" + nextVaccination + "|" + " Vaccine: " + "|" + vaccineTitle + "|" + " PET ---> " + petsName.toUpperCase(Locale.ROOT));
 
             }
         } catch (SQLException exception) {
