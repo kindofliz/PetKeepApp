@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class DBConnection {
@@ -230,7 +231,7 @@ public class DBConnection {
     }
 
 
-    //method to see vaccination schedule
+    //method to see vaccination schedule (original, not working)
     public ArrayList<Pets> seeVaccinationSchedule() {
 
         ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
@@ -268,6 +269,7 @@ public class DBConnection {
         return petsVaccinations;
     }
 
+
     //DIFFERENT method to see vaccination schedule
     public void diffSeeVaccinationSchedule() {
 
@@ -279,23 +281,20 @@ public class DBConnection {
             ResultSet resultSet = statement.executeQuery(sqlStatement);
 
             sqlStatement =
-                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
+                    "SELECT pets.name AS pet_name, vaccines.vaccination_type AS vaccine_type, vaccines.date_to_vaccinate_next AS next_vaccination " +
                             " FROM pets  " +
-                            " LEFT JOIN pets_vaccines  " +
-                            " ON pets_vaccines.pet_id = pets.id " +
-                            " LEFT JOIN vaccines " +
-                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
-                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
+                            " JOIN vaccines  " +
+                            " ORDER BY vaccines.date_to_vaccinate_next";
 
             resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
-                String petsName = resultSet.getString("pet_Name");
-                String vaccineTitle = resultSet.getString("vaccine_Title");
-                String nextVaccination = resultSet.getString("next_Vaccination");
+                String petsName = resultSet.getString("pet_name");
+                String vaccineTitle = resultSet.getString("vaccine_type");
+                String nextVaccination = resultSet.getString("next_vaccination");
 
 
-                System.out.println("PET:" + petsName + " Vaccine: " + vaccineTitle + " Next vaccination date: " + nextVaccination);
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + ": |Vaccine|: " + "\'" + vaccineTitle + "\'" + " |Next vaccination date|: " + "\'" + nextVaccination + "\'");
 
             }
         } catch (SQLException exception) {
@@ -305,6 +304,7 @@ public class DBConnection {
         }
 
     }
+
 
     //method for creating food
     public void createFood(Food food) {
@@ -326,6 +326,7 @@ public class DBConnection {
             System.out.println("Error entering Food info : " + exception);
         }
     }
+
 
     //method for creating medicine
     public void createMedicine(Medicine medicine) {
