@@ -22,7 +22,7 @@ public class PetKeepMain {
             System.out.println("5. - SEE MEDICATION SCHEDULE");
             System.out.println("6. - ADD FOOD INFORMATION");
             System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
-            System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //how to make this happen for each pet separately?
+            System.out.println("8. - ADD A NEW VACCINE FOR A PET");
             System.out.println("9. - DELETE MEDICINE FOR A PET");
             System.out.println("10. - DELETE VACCINE FOR A PET");
             System.out.println("11. - DELETE FOOD FOR A PET");
@@ -48,87 +48,25 @@ public class PetKeepMain {
 
                     break;
                 case 2:
-                    System.out.println("================= LIST OF PETS ================");
-                    //Need to create a method in DBConnection to get only names from the table
-                    petKeepDb.seeAllPets();
+                    System.out.println("================= LIST OF MY PETS ================");
 
-                    //Method to show all pet names. to be located in DBConnections?
-//                    public ArrayList<Pets> getPetNames() {
-//
-//                    ArrayList<Pets> petList = new ArrayList<Pets>();
-//
-//                    try {
-//
-//                        Statement statement = conn.createStatement();
-//                        String sqlStatement = "SELECT name FROM pets";
-//
-//                        ResultSet rs = statement.executeQuery(sqlStatement);
-//
-//                        while (rs.next()) {
-//                            //Create a new Pets object
-//                            Pets pet = new Pets();
-//                            myPet.setName(rs.getString("name"));
-//
-//                            System.out.println(pet.getName());
-//                        }
-//
-//
-//                    } catch (SQLException exception) {
-//                        System.out.println("Error getting Heroes list: " + exception);
-//                    }
-//                    return petList;
-//                }
+                    petKeepDb.getPetNames();
 
-                    System.out.println("================= LIST OF PETS ================");
+                    System.out.println("==================================================");
                     System.out.println();
-
                     break;
                 case 3:
-
                     System.out.println("Enter a name from the pet list: ");
                     //Calling the method to SELECT all the info about chosen pet from DB
-//                    petKeepDb.getOnePet();
-                    System.out.println();
 
-                    //Method located in DBConnections?
-//                    public ArrayList<Pets> getOnePet() {
-//
-//                    ArrayList<Pets> petJustOne= new ArrayList<Pets>();
-//
-//                    try {
-//
-//                        Statement statement = conn.createStatement();
-//                        String sqlStatement = "SELECT * FROM pets WHERE name = " + "\'" + scanner.next() + "\'";
-//
-//                        ResultSet rs = statement.executeQuery(sqlStatement);
-//
-//                        while (rs.next()) {
-//                            //Create a new Hero object
-//                            Pets pet = new Pets();
-//                            pet.setName(rs.getString("name"));
-//                            pet.setAnimalType(rs.getString("animal_type"));
-//                            pet.setAnimalBreed(rs.getString("animal_breed"));
-//                            pet.setDateOfBirth(rs.getString("date_of_birth"));
-//                            pet.setGender(rs.getString("gender").charAt(0));
-//                            pet.setWeight(rs.getDouble("weight"));
-//                            pet.setOwner(rs.getString("owner"));
-//
-//
-//                            System.out.println(pet.toString());
-//                        }
-//
-//
-//
-//                    } catch (SQLException exception) {
-//                        System.out.println("Error getting Heroes list: " + exception);
-//                    }
-//
-//                    return petJustOne;
-//                }
-
+                    System.out.println("================= MY PET ================");
+                    petKeepDb.getOnePet();
+                    System.out.println("=========================================");
 
                     break;
                 case 4:
+                    System.out.println("VACCINATION SCHEDULE: ");
+                    petKeepDb.diffSeeVaccinationSchedule();
 
                     //                    ResultSet resultSet = statement.executeQuery("SELECT * from food");
                     //ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -318,20 +256,16 @@ public class PetKeepMain {
     }
 
     public static void addFood(Scanner scanner, Food foodInfo) {
-//
-//////             private String foodBrand;
-//////    private int foodBagWeight;
-//////    private int dailyAmount; //in grams
-//////    private String purchaseDate;
-//
+
 //        // 1. Asking user to input their Food brand with some validation
         String foodBrand;
         int checkBrand = 0;
 
         do {
-            System.out.println("Enter your food brand you bought:");
-            foodBrand = scanner.next();
-            if (foodBrand.matches("[A-Z][a-zA-Z']*")) {
+            System.out.println("Enter your food brand you bought: ");
+            scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+            foodBrand = scanner.nextLine();
+            if (foodBrand.matches("[A-Z][A-Za-z'\\s+]*")) {
                 foodInfo.setFoodBrand(foodBrand);
                 checkBrand = 1;
             } else {
@@ -339,16 +273,15 @@ public class PetKeepMain {
             }
         } while (checkBrand == 0);
 
-//
+
 //        // 2. Asking user to input food bag weight with some validation
-        int foodBagWeight = 0;
-        String foodBagWeightAsString = String.valueOf(foodBagWeight);
+        int foodBagWeight;
         int checkWeight = 0;
 
         do {
-            System.out.println("Enter food bag weight (g):");
-            foodBagWeightAsString = scanner.next();
-            if (foodBagWeightAsString.matches("[0-9]")) {
+            System.out.println("Enter food bag weight (kg): ");
+            foodBagWeight = scanner.nextInt();
+            if (foodBagWeight > 0) {
                 foodInfo.setFoodBagWeight(foodBagWeight);
                 checkWeight = 1;
             } else {
@@ -356,16 +289,15 @@ public class PetKeepMain {
             }
         } while (checkWeight == 0);
 
-//
+
 //        // 3. Asking user to input daily amount with some validation
-        int dailyAmount = 0;
-        String dailyAmountAsString = String.valueOf(dailyAmount);
+        int dailyAmount;
         int checkAmount = 0;
 
         do {
-            System.out.println("Enter food bag weight:");
-            dailyAmountAsString = scanner.next();
-            if (dailyAmountAsString.matches("[0-9]")) {
+            System.out.println("Enter daily amount of food to be fed: ");
+            dailyAmount = scanner.nextInt();
+            if (dailyAmount > 0) {
                 foodInfo.setDailyAmount(dailyAmount);
                 checkAmount = 1;
             } else {
@@ -373,7 +305,7 @@ public class PetKeepMain {
             }
         } while (checkAmount == 0);
 
-//
+
 //        // 4. Asking user to input purchase date
         String dateOfPurchase;
         int checkDate = 0;
@@ -381,8 +313,6 @@ public class PetKeepMain {
         do {
             System.out.println("Enter purchase date (dd/mm/yyyy):");
             dateOfPurchase = scanner.next();
-
-//            regex needs to be checked
 
             if (dateOfPurchase.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
                 foodInfo.setPurchaseDate(dateOfPurchase);
@@ -396,20 +326,15 @@ public class PetKeepMain {
     }
 
     public static void addMedicine(Scanner scanner, Medicine medicineInfo) {
-
-//  private String typeOfMeds;  //Tick and Flea prevention (Nexgard)
-//    private int regularity; //in months
-//    private String dateGiven;
-//    private String dateToGiveNext;
-
         // 1. Asking user to input their name of medicine with some validation
         String typeOfMeds;
         int checkType = 0;
 
         do {
             System.out.println("Enter name of the medicine:");
-            typeOfMeds = scanner.next();
-            if (typeOfMeds.matches("[A-Z][a-zA-Z']*")) {
+            scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+            typeOfMeds = scanner.nextLine();
+            if (typeOfMeds.matches("[A-Z][A-Za-z'\\-()\\s+]*")) {
                 medicineInfo.setNameOfMedicine(typeOfMeds);
                 checkType = 1;
             } else {
@@ -419,18 +344,17 @@ public class PetKeepMain {
 
 
         // 2. Asking user to input regularity with some validation
-        int regularity = 0;
-        String regularityAsString = String.valueOf(regularity);
+        int regularity;
         int checkRegularity = 0;
 
         do {
             System.out.println("Enter regularity (in months):");
-            regularityAsString = scanner.next();
-            if (regularityAsString.matches("[0-9]")) {
+            regularity = scanner.nextInt();
+            if (regularity > 0) {
                 medicineInfo.setRegularity(regularity);
                 checkRegularity = 1;
             } else {
-                System.out.println("Insert regularity in months.. try again.");
+                System.out.println("Invalid input.. try again.");
             }
         } while (checkRegularity == 0);
 
@@ -458,7 +382,6 @@ public class PetKeepMain {
         do {
             System.out.println("Enter next date to give medicine (dd/mm/yyyy):");
             dateToGiveNext = scanner.next();
-//            regex needs to be checked
             if (dateToGiveNext.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
                 medicineInfo.setDateToGiveNext(dateToGiveNext);
                 checkNextDate = 1;

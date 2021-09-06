@@ -2,7 +2,7 @@ public class Food {
 
     //Attributes
     private String foodBrand;
-    private int foodBagWeight;
+    private int foodBagWeight; //in kg
     private int dailyAmount; //in grams
     private String purchaseDate;
 
