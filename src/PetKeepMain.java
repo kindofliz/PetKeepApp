@@ -11,28 +11,30 @@ public class PetKeepMain {
         int menuItem;
 
         do {
-            System.out.println("~~~~~~~");
-            System.out.println("HELLO");
-            System.out.println("~~~~~~~");
-            System.out.println("CHOOSE YOUR OPTION");
-            System.out.println("1. - ADD A NEW PET"); //done, needs cleaning up and reorganizing
-            System.out.println("2. - SEE LIST OF PETS"); //done
-            System.out.println("3. - SEE A PET'S PROFILE"); //done, but I want to add more information
-            System.out.println("4. - SEE THE VACCINATION SCHEDULE"); //done, need to fix DATES
-            System.out.println("5. - SEE MEDICATION SCHEDULE"); //done, need to fix DATES
-            //we need a menu item to see food information
-            System.out.println("6. - ADD FOOD INFORMATION"); //done
-            System.out.println("7. - ADD A NEW MEDICINE FOR A PET"); //done
-            System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //done
-            System.out.println("9. - DELETE MEDICINE FOR A PET");
-            System.out.println("10. - DELETE VACCINE FOR A PET");
-            System.out.println("11. - DELETE FOOD FOR A PET");
-            System.out.println("12. - DELETE A PET :(");
-            System.out.println("0. - EXIT");
+            System.out.println();
+            System.out.println("===============WELCOME!===============");
+            System.out.println();
+            System.out.println("What would you like to do?");
+            System.out.println("1. - Add a new pet."); //done, needs cleaning up and reorganizing
+            System.out.println("2. - Add my pet's food information."); //done, needs cleaning up and reorganizing
+            System.out.println("3. - Add my pet's medication information."); //done, needs cleaning up and reorganizing
+            System.out.println("4. - Add my pet's vaccination information."); // done, needs cleaning up and reorganizing
+            System.out.println("5. - See a list of my pets."); //done
+            System.out.println("6. - See full information on one pet."); //done, but I want to add more information
+            System.out.println("7. - See the vaccination schedule."); //done
+            System.out.println("8. - See the medication schedule."); //done
+            System.out.println("9. - See information about their food.");
+            System.out.println("10. - Delete a medication record");
+            System.out.println("11. - Delete a vaccination record.");
+            System.out.println("12. - Delete a food record.");
+            System.out.println("13. - Delete a pet :( ");
+            System.out.println("0. - Exit!");
+
             menuItem = scanner.nextInt();
 
             switch (menuItem) {
                 case 1:
+                    //ADD A NEW PET
                     // Creating a new Pets object
                     Pets myPet = new Pets();
 
@@ -49,14 +51,71 @@ public class PetKeepMain {
 
                     break;
                 case 2:
+                    //ADD FOOD INFO
+
+                    // Creating a new Food object
+                    Food foodInfo = new Food();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addFood(scanner, foodInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(foodInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createFood(foodInfo);
+
+                    break;
+                case 3:
+                    //ADD MEDICAL INFO
+
+                    Medicine medicineInfo = new Medicine();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addMedicine(scanner, medicineInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(medicineInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createMedicine(medicineInfo);
+
+                    break;
+                case 4:
+                    //ADD VACCINATION INFO
+
+                    Vaccines vaccineInfo = new Vaccines();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addVaccine(scanner, vaccineInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(vaccineInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createVaccine(vaccineInfo);
+
+                    break;
+                case 5:
+                    //SEE A LIST OF MY PETS
+
                     System.out.println("================= LIST OF MY PETS ================");
 
                     petKeepDb.getPetNames();
 
                     System.out.println("==================================================");
                     System.out.println();
+
                     break;
-                case 3:
+                case 6:
+                    //SEE INFORMATION ON ONE PET
+
                     System.out.println("Enter a name from the pet list: ");
                     //Calling the method to SELECT all the info about chosen pet from DB
 
@@ -65,7 +124,9 @@ public class PetKeepMain {
                     System.out.println("=========================================");
 
                     break;
-                case 4:
+                case 7:
+                    //SEE VACCINATION SCHEDULE
+
                     System.out.println("VACCINATION SCHEDULE: ");
                     petKeepDb.diffSeeVaccinationSchedule();
 
@@ -82,71 +143,41 @@ public class PetKeepMain {
                     //}
 
                     break;
-                case 5:
+                case 8:
+                    //SEE MEDICATION SCHEDULE
+
                     System.out.println("MEDICATION SCHEDULE: ");
                     petKeepDb.seeMedSchedule();
 
                     break;
-                case 6:
-                    // Creating a new Food object
-                    Food foodInfo = new Food();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addFood(scanner, foodInfo);
-
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(foodInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
-                    petKeepDb.createFood(foodInfo);
-
-                    break;
-                case 7:
-
-                    Medicine medicineInfo = new Medicine();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addMedicine(scanner, medicineInfo);
-
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(medicineInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
-                    petKeepDb.createMedicine(medicineInfo);
-
-                    break;
-                case 8:
-                    Vaccines vaccineInfo = new Vaccines();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addVaccine(scanner, vaccineInfo);
-
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(vaccineInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
-                    petKeepDb.createVaccine(vaccineInfo);
-
-                    break;
                 case 9:
+                    //SEE FOOD INFO
+
+
 
                     break;
                 case 10:
+                    //DELETE MEDICAL RECORD
+
+
 
                     break;
                 case 11:
+                    //DELETE VACCINATION RECORD
+
+
 
                     break;
                 case 12:
+                    //DELETE FOOD RECORD
+
+
 
                     break;
                 case 13:
+                    //DELETE A PET
+
+
 
                     break;
                 default:
