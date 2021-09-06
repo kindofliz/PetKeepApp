@@ -15,14 +15,15 @@ public class PetKeepMain {
             System.out.println("HELLO");
             System.out.println("~~~~~~~");
             System.out.println("CHOOSE YOUR OPTION");
-            System.out.println("1. - ADD A NEW PET");
-            System.out.println("2. - SEE LIST OF PETS");
-            System.out.println("3. - SEE A PET'S PROFILE");
-            System.out.println("4. - SEE THE VACCINATION SCHEDULE");
-            System.out.println("5. - SEE MEDICATION SCHEDULE");
-            System.out.println("6. - ADD FOOD INFORMATION");
-            System.out.println("7. - ADD A NEW MEDICINE FOR A PET");
-            System.out.println("8. - ADD A NEW VACCINE FOR A PET");
+            System.out.println("1. - ADD A NEW PET"); //done, needs cleaning up and reorganizing
+            System.out.println("2. - SEE LIST OF PETS"); //done
+            System.out.println("3. - SEE A PET'S PROFILE"); //done, but I want to add more information
+            System.out.println("4. - SEE THE VACCINATION SCHEDULE"); //done, need to fix DATES
+            System.out.println("5. - SEE MEDICATION SCHEDULE"); //done, need to fix DATES
+            //we need a menu item to see food information
+            System.out.println("6. - ADD FOOD INFORMATION"); //done
+            System.out.println("7. - ADD A NEW MEDICINE FOR A PET"); //done
+            System.out.println("8. - ADD A NEW VACCINE FOR A PET"); //done
             System.out.println("9. - DELETE MEDICINE FOR A PET");
             System.out.println("10. - DELETE VACCINE FOR A PET");
             System.out.println("11. - DELETE FOOD FOR A PET");
@@ -68,7 +69,7 @@ public class PetKeepMain {
                     System.out.println("VACCINATION SCHEDULE: ");
                     petKeepDb.diffSeeVaccinationSchedule();
 
-                    //                    ResultSet resultSet = statement.executeQuery("SELECT * from food");
+                    //ResultSet resultSet = statement.executeQuery("SELECT * from food");
                     //ResultSetMetaData rsmd = resultSet.getMetaData();
                     //int columnsNumber = rsmd.getColumnCount();
                     //while (resultSet.next()) {
@@ -82,10 +83,11 @@ public class PetKeepMain {
 
                     break;
                 case 5:
+                    System.out.println("MEDICATION SCHEDULE: ");
+                    petKeepDb.seeMedSchedule();
 
                     break;
                 case 6:
-//                    6. - ADD FOOD INFORMATION
                     // Creating a new Food object
                     Food foodInfo = new Food();
 
@@ -118,6 +120,18 @@ public class PetKeepMain {
 
                     break;
                 case 8:
+                    Vaccines vaccineInfo = new Vaccines();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addVaccine(scanner, vaccineInfo);
+
+                    //Testing until we add databases
+                    System.out.println("******TEST******");
+                    System.out.println(vaccineInfo);
+                    System.out.println("****************");
+
+                    //Calling the method that inserts this into database (needs to be created)
+                    petKeepDb.createVaccine(vaccineInfo);
 
                     break;
                 case 9:
@@ -326,6 +340,23 @@ public class PetKeepMain {
     }
 
     public static void addMedicine(Scanner scanner, Medicine medicineInfo) {
+        // 0. Asking user to add their pet's name for this medication
+        String name;
+        int checkName = 0;
+
+        do {
+            System.out.println("Which of your added pet's is this medication for?:");
+            name = scanner.next();
+            if (name.matches("[A-Z][a-zA-Z']*")) {
+                medicineInfo.setName(name);
+                checkName = 1;
+            } else {
+                System.out.println("Invalid name.. try again.");
+            }
+        } while (checkName == 0);
+
+
+
         // 1. Asking user to input their name of medicine with some validation
         String typeOfMeds;
         int checkType = 0;
@@ -335,7 +366,7 @@ public class PetKeepMain {
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
             typeOfMeds = scanner.nextLine();
             if (typeOfMeds.matches("[A-Z][A-Za-z'\\-()\\s+]*")) {
-                medicineInfo.setNameOfMedicine(typeOfMeds);
+                medicineInfo.setTypeOfMeds(typeOfMeds);
                 checkType = 1;
             } else {
                 System.out.println("Invalid medicine name.. try again.");
@@ -392,6 +423,59 @@ public class PetKeepMain {
         } while (checkNextDate == 0);
 
     }
+
+    public static void addVaccine(Scanner scanner, Vaccines vaccineInfo) {
+
+        // 1. Asking user to input vaccine type with some validation
+        String vaccine;
+        int checkVaccine = 0;
+
+        do {
+            System.out.println("Enter type orn name of the vaccine:");
+            scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+            vaccine = scanner.nextLine();
+            if (vaccine.matches("[A-Z][A-Za-z'\\-()\\s+]*")) {
+                vaccineInfo.setVaccinationType(vaccine);
+                checkVaccine = 1;
+            } else {
+                System.out.println("Invalid vaccine name.. try again.");
+            }
+        } while (checkVaccine == 0);
+
+
+        // 2. Asking user to input last vaccination date
+        String lastVacc;
+        int checkLast = 0;
+
+        do {
+            System.out.println("Enter date of last vaccination (dd/mm/yyyy):");
+            lastVacc = scanner.next();
+            if (lastVacc.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                vaccineInfo.setDateVaccinated(lastVacc);
+                checkLast = 1;
+            } else {
+                System.out.println("Invalid date format.. try again.");
+            }
+        } while (checkLast == 0);
+
+
+        // 3. Asking user to input next date of vaccination
+        String nextVacc;
+        int checkNext = 0;
+
+        do {
+            System.out.println("Enter date of next scheduled vaccination (dd/mm/yyyy):");
+            nextVacc = scanner.next();
+            if (nextVacc.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+                vaccineInfo.setDateToVaccinateNext(nextVacc);
+                checkNext = 1;
+            } else {
+                System.out.println("Invalid date format.. try again.");
+            }
+        } while (checkNext == 0);
+
+    }
+
 
 
 }

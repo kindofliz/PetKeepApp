@@ -1,4 +1,4 @@
-public class Vaccines {
+public class Vaccines extends Pets {
 
     //Attributes
     private String vaccinationType;  //e.g. Annual

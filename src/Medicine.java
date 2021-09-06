@@ -1,4 +1,4 @@
-public class Medicine {
+public class Medicine extends Pets {
 
     //Attributes
     private String typeOfMeds;  //Tick and Flea prevention (Nexgard)
@@ -24,12 +24,20 @@ public class Medicine {
 
 
     //GETTERS AND SETTERS
-    public String getNameOfMedicine() {
+    public String getTypeOfMeds() {
         return typeOfMeds;
     }
 
-    public void setNameOfMedicine(String nameOfMedicine) {
-        this.typeOfMeds = nameOfMedicine;
+    public void setTypeOfMeds(String typeOfMeds) {
+        this.typeOfMeds = typeOfMeds;
+    }
+
+    public int getRegularity() {
+        return regularity;
+    }
+
+    public void setRegularity(int regularity) {
+        this.regularity = regularity;
     }
 
     public String getDateGiven() {
@@ -47,8 +55,4 @@ public class Medicine {
     public void setDateToGiveNext(String dateToGiveNext) {
         this.dateToGiveNext = dateToGiveNext;
     }
-
-    public int getRegularity() { return regularity; }
-
-    public void setRegularity(int regularity) { this.regularity = regularity; }
 }

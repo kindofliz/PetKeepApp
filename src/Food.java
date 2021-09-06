@@ -1,4 +1,4 @@
-public class Food {
+public class Food extends Pets{
 
     //Attributes
     private String foodBrand;

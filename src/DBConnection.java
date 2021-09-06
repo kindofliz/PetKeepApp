@@ -85,6 +85,7 @@ public class DBConnection {
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS medicine" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                "pet_name TEXT NOT NULL, " +
                                 "type_of_meds TEXT NOT NULL, " +
                                 "regularity INTEGER NOT NULL, " +
                                 "date_given TEXT NOT NULL, " +
@@ -231,43 +232,43 @@ public class DBConnection {
     }
 
 
-    //method to see vaccination schedule (original, not working)
-    public ArrayList<Pets> seeVaccinationSchedule() {
-
-        ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
-
-        try {
-            Statement statement = conn.createStatement();
-            String sqlStatement;
-
-            sqlStatement = "SELECT * FROM pets";
-            ResultSet resultSet = statement.executeQuery(sqlStatement);
-
-            sqlStatement =
-                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
-                            " FROM pets  " +
-                            " LEFT JOIN pets_vaccines  " +
-                            " ON pets_vaccines.pet_id = pets.id " +
-                            " LEFT JOIN vaccines " +
-                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
-                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
-
-            resultSet = statement.executeQuery(sqlStatement);
-
-            while (resultSet.next()) {
-                String petsName = resultSet.getString("pet_Name");
-                String vaccineTitle = resultSet.getString("vaccine_Title");
-                String nextVaccination = resultSet.getString("next_Vaccination");
-
-
-            }
-        } catch (SQLException exception) {
-
-            System.out.println("Error getting vaccination list " + exception);
-
-        }
-        return petsVaccinations;
-    }
+//    //method to see vaccination schedule (original, not working)
+//    public ArrayList<Pets> seeVaccinationSchedule() {
+//
+//        ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
+//
+//        try {
+//            Statement statement = conn.createStatement();
+//            String sqlStatement;
+//
+//            sqlStatement = "SELECT * FROM pets";
+//            ResultSet resultSet = statement.executeQuery(sqlStatement);
+//
+//            sqlStatement =
+//                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
+//                            " FROM pets  " +
+//                            " LEFT JOIN pets_vaccines  " +
+//                            " ON pets_vaccines.pet_id = pets.id " +
+//                            " LEFT JOIN vaccines " +
+//                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
+//                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
+//
+//            resultSet = statement.executeQuery(sqlStatement);
+//
+//            while (resultSet.next()) {
+//                String petsName = resultSet.getString("pet_Name");
+//                String vaccineTitle = resultSet.getString("vaccine_Title");
+//                String nextVaccination = resultSet.getString("next_Vaccination");
+//
+//
+//            }
+//        } catch (SQLException exception) {
+//
+//            System.out.println("Error getting vaccination list " + exception);
+//
+//        }
+//        return petsVaccinations;
+//    }
 
 
     //DIFFERENT method to see vaccination schedule
@@ -300,7 +301,43 @@ public class DBConnection {
             }
         } catch (SQLException exception) {
 
-            System.out.println("Error getting vaccination list " + exception);
+            System.out.println("Error getting vaccination schedule list " + exception);
+
+        }
+
+    }
+
+
+    //METHOD TO SEE MEDICATION SCHEDULE
+    public void seeMedSchedule() {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet = statement.executeQuery(sqlStatement);
+
+            sqlStatement =
+                    "SELECT pets.name AS pet_name, medicine.type_of_meds AS medication_type, medicine.date_to_give_next AS administer_meds_next " +
+                            " FROM pets  " +
+                            " JOIN medicine  " +
+                            " ON pets.name = medicine.pet_name " +
+                            " ORDER BY medicine.date_to_give_next";
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+                String petsName = resultSet.getString("pet_name");
+                String medicineTitle = resultSet.getString("medication_type");
+                String nextMedAdministration = resultSet.getString("administer_meds_next");
+
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + " Next date to administer meds: " + "|" + nextMedAdministration + "|" + " Medication type: " + "|" + medicineTitle + "|");
+
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting medication schedule list " + exception);
 
         }
 
@@ -334,17 +371,12 @@ public class DBConnection {
 
         try {
 
-//    "type_of_meds TEXT NOT NULL, " +
-//                                "regularity INTEGER NOT NULL, " +
-//                                "date_given TEXT NOT NULL, " +
-//                                "date_to_give_next TEXT NOT NULL)";
-
-
             Statement statement = conn.createStatement();
             String sqlStatement = "INSERT INTO medicine (" +
-                    "type_of_meds, regularity, date_given, date_to_give_next) " +
+                    "pet_name, type_of_meds, regularity, date_given, date_to_give_next) " +
                     "VALUES (" +
-                    "'" + medicine.getNameOfMedicine() + "'," +
+                    "'" + medicine.getName() + "'," +
+                    "'" + medicine.getTypeOfMeds() + "'," +
                     + medicine.getRegularity() + "," +
                     "'" + medicine.getDateGiven() + "'," +
                     "'" + medicine.getDateToGiveNext() + "'" +
@@ -356,4 +388,32 @@ public class DBConnection {
             System.out.println("Error entering Medicine info : " + exception);
         }
     }
+
+
+    //method for creating vaccine
+    public void createVaccine(Vaccines vaccine) {
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO vaccines (" +
+                    "vaccination_type, date_vaccinated, date_to_vaccinate_next) " +
+                    "VALUES (" +
+                    "'" + vaccine.getVaccinationType() + "'," +
+                    "'" + vaccine.getDateVaccinated() + "'," +
+                    "'" + vaccine.getDateToVaccinateNext() + "'" +
+                    ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Vaccination info : " + exception);
+        }
+    }
+
+
+
+
+
+
     }
