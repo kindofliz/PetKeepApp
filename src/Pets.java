@@ -10,6 +10,7 @@ public class Pets {
     private char gender;         //M/F
     private double weight;       //in kg
     private String owner;        //Name
+    //add allergies as string here
 
 
     //no-argument constructor

@@ -8,6 +8,8 @@ public class PetKeepMain {
 
         Scanner scanner = new Scanner(System.in);
 
+        Pets currentPet = new Pets();
+
         int menuItem;
 
         do {
@@ -15,12 +17,20 @@ public class PetKeepMain {
             System.out.println("===============WELCOME!===============");
             System.out.println();
             System.out.println("What would you like to do?");
+            // 55. "Log in as currentpet"
+            // question - whats your pet name?
+            // slq select * from pets where name = scanner.nextLine();
+            // dabusim esoso informaciju
+            // saglabat ieks current pet
+
+            //beigas velreiz 55 un ielogoties ar citu vardu
+
             System.out.println("1. - Add a new pet."); //almost done, needs cleaning up and reorganizing
             System.out.println("2. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
             System.out.println("3. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
             System.out.println("4. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
             System.out.println("5. - See a list of my pets (by name)."); //done
-            System.out.println("6. - See full information on one pet."); //almost done, but I want to add more information
+            System.out.println("6. - See full information on one pet."); //almost done, but I want to add more information if possible
             System.out.println("7. - See the vaccination schedule."); //done
             System.out.println("8. - See the medication schedule."); //done
             System.out.println("9. - See information about their food."); //done
@@ -72,6 +82,8 @@ public class PetKeepMain {
                     //ADD MEDICAL INFO
 
                     Medicine medicineInfo = new Medicine();
+                    medicineInfo.setPetId(currentPet.getId());
+
 
                     // Moved method to the bottom of PetKeepMain
                     addMedicine(scanner, medicineInfo);

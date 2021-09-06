@@ -24,8 +24,7 @@ public class DBConnection {
                 Statement statement = conn.createStatement();
                 String sqlStatement =
                         "CREATE TABLE IF NOT EXISTS pets" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "name TEXT NOT NULL, " +
+                                "(name TEXT PRIMARY KEY NOT NULL, " +
                                 "animal_type TEXT NOT NULL, " +
                                 "animal_breed TEXT NOT NULL, " +
                                 "date_of_birth TEXT NOT NULL, " +
@@ -50,12 +49,21 @@ public class DBConnection {
                 //CREATING A TABLE FOR VACCINES
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS vaccines" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                " (id_pet_name TEXT PRIMARY KEY, " +
                                 "vaccination_type TEXT NOT NULL, " +
                                 "date_vaccinated TEXT NOT NULL, " +
                                 "date_to_vaccinate_next TEXT NOT NULL)";
 
                 statement.execute(sqlStatement);
+
+
+//                SELECT * FROM
+//                pets
+//                LEFT JOIN medicine
+//                ON pets.id = medicine.pet_id
+//                WHERE pets.name = 'Ezra'
+
+
 
 
                 //CREATING A TABLE FOR FOOD
@@ -160,7 +168,7 @@ public class DBConnection {
                     "'" + pet.getAnimalBreed() + "'," +
                     "'" + pet.getDateOfBirth() + "'," +
                     "'" + pet.getGender() + "'," +
-                    + pet.getWeight() + "," +
+                    +pet.getWeight() + "," +
                     "'" + pet.getOwner() + "'" +
                     ")";
 
@@ -391,8 +399,8 @@ public class DBConnection {
                     "VALUES (" +
                     "'" + food.getName() + "'," +
                     "'" + food.getFoodBrand() + "'," +
-                    + food.getFoodBagWeight() + "," +
-                    + food.getDailyAmount() + "," +
+                    +food.getFoodBagWeight() + "," +
+                    +food.getDailyAmount() + "," +
                     "'" + food.getPurchaseDate() + "'" +
                     ")";
 
@@ -415,7 +423,7 @@ public class DBConnection {
                     "VALUES (" +
                     "'" + medicine.getName() + "'," +
                     "'" + medicine.getTypeOfMeds() + "'," +
-                    + medicine.getRegularity() + "," +
+                    +medicine.getRegularity() + "," +
                     "'" + medicine.getDateGiven() + "'," +
                     "'" + medicine.getDateToGiveNext() + "'" +
                     ")";
@@ -449,9 +457,29 @@ public class DBConnection {
         }
     }
 
+    //method to delete a medical record
+    public void deleteMedRec() {
+        try {
+
+//            DELETE FROM employees
+//            WHERE EXISTS
+//            ( SELECT *
+//                    FROM contacts
+//            WHERE contacts.contact_id = employees.employee_id
+//            AND contacts.contact_id < 100 );
 
 
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM medicine" +
+                    "WHERE medicine.pet_name = '%" + scanner.next() + "%' AND medicine.type_of_meds LIKE '%'" + scanner.next() + "%'";
 
+            statement.execute(sqlStatement);
 
-
+        } catch (SQLException exception) {
+            System.out.println("Error entering Vaccination info : " + exception);
+        }
     }
+
+
+}
+
