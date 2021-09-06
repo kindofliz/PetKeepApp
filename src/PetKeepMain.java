@@ -128,6 +128,7 @@ public class PetKeepMain {
                     //SEE VACCINATION SCHEDULE
 
                     System.out.println("VACCINATION SCHEDULE: ");
+                    System.out.println();
                     petKeepDb.diffSeeVaccinationSchedule();
 
                     //ResultSet resultSet = statement.executeQuery("SELECT * from food");
@@ -147,11 +148,15 @@ public class PetKeepMain {
                     //SEE MEDICATION SCHEDULE
 
                     System.out.println("MEDICATION SCHEDULE: ");
+                    System.out.println();
                     petKeepDb.seeMedSchedule();
 
                     break;
                 case 9:
                     //SEE FOOD INFO
+                    System.out.println("FOOD INFORMATION: ");
+                    System.out.println();
+                    petKeepDb.seeFoodInfo();
 
 
 
@@ -301,6 +306,22 @@ public class PetKeepMain {
     }
 
     public static void addFood(Scanner scanner, Food foodInfo) {
+
+        // 0. Asking user to input their pet's name as the id for food
+        String name;
+        int checkName = 0;
+
+        do {
+            System.out.println("Which pet form your pet list are you adding this food item to?");
+            name = scanner.next();
+            if (name.matches("[A-Z][a-zA-Z']*")) {
+                foodInfo.setName(name);
+                checkName = 1;
+            } else {
+                System.out.println("Invalid name.. try again.");
+            }
+        } while (checkName == 0);
+
 
 //        // 1. Asking user to input their Food brand with some validation
         String foodBrand;

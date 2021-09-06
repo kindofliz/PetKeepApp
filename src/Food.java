@@ -1,3 +1,8 @@
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
+
 public class Food extends Pets{
 
     //Attributes
@@ -15,12 +20,29 @@ public class Food extends Pets{
     //METHODS
     @Override
     public String toString() {
-        return "Food{" +
-                "foodBrand='" + foodBrand + '\'' +
-                ", foodBagWeight=" + foodBagWeight +
-                ", dailyAmount=" + dailyAmount +
-                ", purchaseDate='" + purchaseDate + '\'' +
-                '}';
+        return getName().toUpperCase(Locale.ROOT) + " --> " +
+                "| Food brand: '" + foodBrand + '\'' +
+                "| Purchased bag weight: " + foodBagWeight + " kg " +
+                "| Daily consumption amount: " + dailyAmount + " grams " +
+                "| Purchase date: '" + purchaseDate + '\'' +
+                '|';
+    }
+
+    //In how many days will the food run out?
+    public int foodDays() {
+
+       int daysFoodWillLast = (foodBagWeight*1000)/dailyAmount;
+
+        return daysFoodWillLast;
+    }
+
+    //Date when to buy new bag
+    public String buyFood() {
+
+        String date = purchaseDate;
+        LocalDate localDate = LocalDate.parse(date);
+
+        return localDate.plusDays(foodDays()).toString();
     }
 
 

@@ -61,7 +61,7 @@ public class DBConnection {
                 //CREATING A TABLE FOR FOOD
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS food" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                " (id_pet_name TEXT PRIMARY KEY NOT NULL," +
                                 "food_brand TEXT NOT NULL, " +
                                 "food_bag_weight INTEGER NOT NULL, " +
                                 "daily_amount INTEGER NOT NULL, " +
@@ -343,6 +343,43 @@ public class DBConnection {
 
     }
 
+    // method for seeing all food info
+    public ArrayList<Food> seeFoodInfo() {
+
+        ArrayList<Food> allFood = new ArrayList<>();
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT * FROM food";
+
+            ResultSet rs = statement.executeQuery(sqlStatement);
+
+            while (rs.next()) {
+
+                // Create new Pet object
+                Food food = new Food();
+                food.setName(rs.getString("id_pet_name"));
+                food.setFoodBrand(rs.getString("food_brand"));
+                food.setFoodBagWeight(rs.getInt("food_bag_weight"));
+                food.setDailyAmount(rs.getInt("daily_amount"));
+                food.setPurchaseDate(rs.getString("purchase_date"));
+
+                System.out.println(food);
+                System.out.println();
+                System.out.println("This food bag will last you: " + food.foodDays() + " days from purchase date!");
+                System.out.println("You will need to buy a new bag by: " + food.buyFood());
+                System.out.println();
+            }
+
+
+        } catch (SQLException exception) {
+            System.out.println("Error getting Pet list: " + exception);
+        }
+
+        return allFood;
+    }
+
 
     //method for creating food
     public void createFood(Food food) {
@@ -350,8 +387,9 @@ public class DBConnection {
         try {
             Statement statement = conn.createStatement();
             String sqlStatement = "INSERT INTO food (" +
-                    "food_brand, food_bag_weight, daily_amount, purchase_date) " +
+                    "id_pet_name, food_brand, food_bag_weight, daily_amount, purchase_date) " +
                     "VALUES (" +
+                    "'" + food.getName() + "'," +
                     "'" + food.getFoodBrand() + "'," +
                     + food.getFoodBagWeight() + "," +
                     + food.getDailyAmount() + "," +
