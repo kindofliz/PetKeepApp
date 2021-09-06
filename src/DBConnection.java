@@ -114,7 +114,7 @@ public class DBConnection {
     // method for seeing all Pets
     public ArrayList<Pets> seeAllPets() {
 
-        ArrayList<Pets> allPets = new ArrayList<Pets>();
+        ArrayList<Pets> allPets = new ArrayList<>();
 
         try {
 
@@ -135,7 +135,7 @@ public class DBConnection {
                 pet.setWeight(rs.getInt("weight"));
                 pet.setOwner(rs.getString("owner"));
 
-                System.out.println(pet.toString());
+                System.out.println(pet);
             }
 
 
@@ -175,7 +175,7 @@ public class DBConnection {
     //METHOD TO SHOW THE LIST OF PET NAMES
     public ArrayList<Pets> getPetNames() {
 
-        ArrayList<Pets> petList = new ArrayList<Pets>();
+        ArrayList<Pets> petList = new ArrayList<>();
 
         try {
             Statement statement = conn.createStatement();
@@ -200,11 +200,11 @@ public class DBConnection {
     //METHOD TO SHOW ONE PET'S INFORMATION (PET PROFILE)
     public ArrayList<Pets> getOnePet() {
 
-        ArrayList<Pets> petJustOne = new ArrayList<Pets>();
+        ArrayList<Pets> petJustOne = new ArrayList<>();
 
         try {
             Statement statement = conn.createStatement();
-            String sqlStatement = "SELECT * FROM pets WHERE name = " + "\'" + scanner.next() + "\'";
+            String sqlStatement = "SELECT * FROM pets WHERE name = " + "'" + scanner.next() + "'";
             System.out.println();
 
             ResultSet rs = statement.executeQuery(sqlStatement);
@@ -221,7 +221,7 @@ public class DBConnection {
                 pet.setOwner(rs.getString("owner"));
 
 
-                System.out.println(pet.toString());
+                System.out.println(pet);
             }
 
         } catch (SQLException exception) {
@@ -279,7 +279,7 @@ public class DBConnection {
             String sqlStatement;
 
             sqlStatement = "SELECT * FROM pets";
-            ResultSet resultSet = statement.executeQuery(sqlStatement);
+            ResultSet resultSet;
 
             sqlStatement =
                     "SELECT pets.name AS pet_name, vaccines.vaccination_type AS vaccine_type, vaccines.date_to_vaccinate_next AS next_vaccination " +
@@ -316,7 +316,7 @@ public class DBConnection {
             String sqlStatement;
 
             sqlStatement = "SELECT * FROM pets";
-            ResultSet resultSet = statement.executeQuery(sqlStatement);
+            ResultSet resultSet;
 
             sqlStatement =
                     "SELECT pets.name AS pet_name, medicine.type_of_meds AS medication_type, medicine.date_to_give_next AS administer_meds_next " +

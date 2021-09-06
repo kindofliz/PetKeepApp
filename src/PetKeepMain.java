@@ -217,12 +217,12 @@ public class PetKeepMain {
         int checkDate = 0;
 
         do {
-            System.out.println("Enter your pet's birthday (dd/mm/yyyy):");
+            System.out.println("Enter your pet's birthday (yyyy-mm-dd):");
             dateOfBirth = scanner.next();
-            if (dateOfBirth.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (dateOfBirth.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")){
                 myPet.setDateOfBirth(dateOfBirth);
                 checkDate = 1;
-            } else {
+            } else{
                 System.out.println("Invalid date format.. try again.");
                 System.out.println();
             }
@@ -325,10 +325,10 @@ public class PetKeepMain {
         int checkDate = 0;
 
         do {
-            System.out.println("Enter purchase date (dd/mm/yyyy):");
+            System.out.println("Enter purchase date (yyy-mm-dd):");
             dateOfPurchase = scanner.next();
 
-            if (dateOfPurchase.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (dateOfPurchase.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 foodInfo.setPurchaseDate(dateOfPurchase);
                 checkDate = 1;
             } else {
@@ -354,7 +354,6 @@ public class PetKeepMain {
                 System.out.println("Invalid name.. try again.");
             }
         } while (checkName == 0);
-
 
 
         // 1. Asking user to input their name of medicine with some validation
@@ -395,9 +394,9 @@ public class PetKeepMain {
         int checkDate = 0;
 
         do {
-            System.out.println("Enter first date medicine was given (dd/mm/yyyy):");
+            System.out.println("Enter first date medicine was given (yyy-mm-dd):");
             dateGiven = scanner.next();
-            if (dateGiven.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (dateGiven.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 medicineInfo.setDateGiven(dateGiven);
                 checkDate = 1;
             } else {
@@ -411,9 +410,9 @@ public class PetKeepMain {
         int checkNextDate = 0;
 
         do {
-            System.out.println("Enter next date to give medicine (dd/mm/yyyy):");
+            System.out.println("Enter next date to give medicine (yyyy-mm-dd):");
             dateToGiveNext = scanner.next();
-            if (dateToGiveNext.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (dateToGiveNext.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 medicineInfo.setDateToGiveNext(dateToGiveNext);
                 checkNextDate = 1;
             } else {
@@ -448,9 +447,9 @@ public class PetKeepMain {
         int checkLast = 0;
 
         do {
-            System.out.println("Enter date of last vaccination (dd/mm/yyyy):");
+            System.out.println("Enter date of last vaccination (yyyy-mm-dd):");
             lastVacc = scanner.next();
-            if (lastVacc.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (lastVacc.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 vaccineInfo.setDateVaccinated(lastVacc);
                 checkLast = 1;
             } else {
@@ -464,9 +463,9 @@ public class PetKeepMain {
         int checkNext = 0;
 
         do {
-            System.out.println("Enter date of next scheduled vaccination (dd/mm/yyyy):");
+            System.out.println("Enter date of next scheduled vaccination (yyyy-mm-dd):");
             nextVacc = scanner.next();
-            if (nextVacc.matches("^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$")) {
+            if (nextVacc.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 vaccineInfo.setDateToVaccinateNext(nextVacc);
                 checkNext = 1;
             } else {
@@ -475,7 +474,6 @@ public class PetKeepMain {
         } while (checkNext == 0);
 
     }
-
 
 
 }
