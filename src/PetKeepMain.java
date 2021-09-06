@@ -130,7 +130,7 @@ public class PetKeepMain {
                     break;
                 case 4:
 
-                    //                    ResultSet resultSet = statement.executeQuery("SELECT * from foo");
+                    //                    ResultSet resultSet = statement.executeQuery("SELECT * from food");
                     //ResultSetMetaData rsmd = resultSet.getMetaData();
                     //int columnsNumber = rsmd.getColumnCount();
                     //while (resultSet.next()) {

@@ -166,6 +166,8 @@ public class DBConnection {
         }
     }
 
+
+    //method to see vaccination schedule
     public ArrayList<Pets> seeVaccinationSchedule() {
 
         ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
