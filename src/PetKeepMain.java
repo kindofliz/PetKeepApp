@@ -15,20 +15,20 @@ public class PetKeepMain {
             System.out.println("===============WELCOME!===============");
             System.out.println();
             System.out.println("What would you like to do?");
-            System.out.println("1. - Add a new pet."); //done, needs cleaning up and reorganizing
-            System.out.println("2. - Add my pet's food information."); //done, needs cleaning up and reorganizing
-            System.out.println("3. - Add my pet's medication information."); //done, needs cleaning up and reorganizing
-            System.out.println("4. - Add my pet's vaccination information."); // done, needs cleaning up and reorganizing
-            System.out.println("5. - See a list of my pets."); //done
-            System.out.println("6. - See full information on one pet."); //done, but I want to add more information
+            System.out.println("1. - Add a new pet."); //almost done, needs cleaning up and reorganizing
+            System.out.println("2. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("3. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("4. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
+            System.out.println("5. - See a list of my pets (by name)."); //done
+            System.out.println("6. - See full information on one pet."); //almost done, but I want to add more information
             System.out.println("7. - See the vaccination schedule."); //done
             System.out.println("8. - See the medication schedule."); //done
-            System.out.println("9. - See information about their food.");
+            System.out.println("9. - See information about their food."); //done
             System.out.println("10. - Delete a medication record");
             System.out.println("11. - Delete a vaccination record.");
             System.out.println("12. - Delete a food record.");
             System.out.println("13. - Delete a pet :( ");
-            System.out.println("0. - Exit!");
+            System.out.println("0. - Exit!"); //done
 
             menuItem = scanner.nextInt();
 
