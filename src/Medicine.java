@@ -1,10 +1,11 @@
-public class Medicine extends Pets {
+public class Medicine {
 
     //Attributes
     private String typeOfMeds;  //Tick and Flea prevention (Nexgard)
     private int regularity; //in months
     private String dateGiven;
     private String dateToGiveNext;
+    private int petId;
 
 
     //no-argument constructor
@@ -54,5 +55,13 @@ public class Medicine extends Pets {
 
     public void setDateToGiveNext(String dateToGiveNext) {
         this.dateToGiveNext = dateToGiveNext;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 }

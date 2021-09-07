@@ -3,13 +3,14 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
-public class Food extends Pets{
+public class Food {
 
     //Attributes
     private String foodBrand;
     private int foodBagWeight; //in kg
     private int dailyAmount; //in grams
     private String purchaseDate;
+    private int petId;
 
 
     //no-argument constructor
@@ -20,7 +21,7 @@ public class Food extends Pets{
     //METHODS
     @Override
     public String toString() {
-        return getName().toUpperCase(Locale.ROOT) + " --> " +
+        return "FOOD" + " --> " +
                 "| Food brand: '" + foodBrand + '\'' +
                 "| Purchased bag weight: " + foodBagWeight + " kg " +
                 "| Daily consumption amount: " + dailyAmount + " grams " +
@@ -79,5 +80,11 @@ public class Food extends Pets{
         this.purchaseDate = purchaseDate;
     }
 
+    public int getPetId() {
+        return petId;
+    }
 
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
 }

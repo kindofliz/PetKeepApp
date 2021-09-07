@@ -7,7 +7,7 @@ public class DBConnection {
 
     Scanner scanner = new Scanner(System.in);
 
-    private Connection conn;
+    public Connection conn;
 
     public DBConnection() {
 
@@ -24,7 +24,8 @@ public class DBConnection {
                 Statement statement = conn.createStatement();
                 String sqlStatement =
                         "CREATE TABLE IF NOT EXISTS pets" +
-                                "(name TEXT PRIMARY KEY NOT NULL, " +
+                                "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                "name TEXT NOT NULL UNIQUE, " +
                                 "animal_type TEXT NOT NULL, " +
                                 "animal_breed TEXT NOT NULL, " +
                                 "date_of_birth TEXT NOT NULL, " +
@@ -33,58 +34,29 @@ public class DBConnection {
                                 "owner TEXT NOT NULL )";
 
                 statement.execute(sqlStatement);
-
-
-                //INTERMEDIATE MANY TO MANY TABLE pets+vaccines
-                sqlStatement =
-                        "CREATE TABLE IF NOT EXISTS pets_vaccines" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "pet_id INTEGER NOT NULL, " +
-                                "vaccine_id INTEGER NOT NULL, " +
-                                "date_to_vaccinate_next TEXT NOT NULL)";
-
-                statement.execute(sqlStatement);
-
+                
 
                 //CREATING A TABLE FOR VACCINES
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS vaccines" +
-                                " (id_pet_name TEXT PRIMARY KEY, " +
+                                " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "vaccination_type TEXT NOT NULL, " +
                                 "date_vaccinated TEXT NOT NULL, " +
-                                "date_to_vaccinate_next TEXT NOT NULL)";
+                                "date_to_vaccinate_next TEXT NOT NULL, " +
+                                "pet_id INTEGER NOT NULL)";
 
                 statement.execute(sqlStatement);
-
-
-//                SELECT * FROM
-//                pets
-//                LEFT JOIN medicine
-//                ON pets.id = medicine.pet_id
-//                WHERE pets.name = 'Ezra'
-
-
 
 
                 //CREATING A TABLE FOR FOOD
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS food" +
-                                " (id_pet_name TEXT PRIMARY KEY NOT NULL," +
+                                " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "food_brand TEXT NOT NULL, " +
                                 "food_bag_weight INTEGER NOT NULL, " +
                                 "daily_amount INTEGER NOT NULL, " +
-                                "purchase_date TEXT NOT NULL)";
-
-                statement.execute(sqlStatement);
-
-
-                //INTERMEDIATE MANY TO MANY TABLE pets+food
-                sqlStatement =
-                        "CREATE TABLE IF NOT EXISTS pets_food" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "pet_id INTEGER NOT NULL, " +
-                                "food_id INTEGER NOT NULL, " +
-                                "daily_amount INTEGER NOT NULL)";
+                                "purchase_date TEXT NOT NULL, " +
+                                "pet_id INTEGER NOT NULL)";
 
                 statement.execute(sqlStatement);
 
@@ -93,33 +65,119 @@ public class DBConnection {
                 sqlStatement =
                         "CREATE TABLE IF NOT EXISTS medicine" +
                                 " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "pet_name TEXT NOT NULL, " +
                                 "type_of_meds TEXT NOT NULL, " +
                                 "regularity INTEGER NOT NULL, " +
                                 "date_given TEXT NOT NULL, " +
-                                "date_to_give_next TEXT NOT NULL)";
+                                "date_to_give_next TEXT NOT NULL, " +
+                                "pet_id INTEGER NOT NULL)";
 
                 statement.execute(sqlStatement);
-
-
-                //INTERMEDIATE MANY TO MANY TABLE pets+medicine
-                sqlStatement =
-                        "CREATE TABLE IF NOT EXISTS pets_medicine" +
-                                " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                                "pet_id INTEGER NOT NULL, " +
-                                "medicine_id INTEGER NOT NULL, " +
-                                "date_to_give_next TEXT NOT NULL)";
-
-                statement.execute(sqlStatement);
-
             }
-
         } catch (SQLException exception) {
             System.out.println("Database issues " + exception);
         }
     }
 
-    // method for seeing all Pets
+
+//SHOWING INFO FROM TWO TABLES
+//                SELECT * FROM
+//                pets
+//                LEFT JOIN medicine
+//                ON pets.id = medicine.pet_id
+//                WHERE pets.name = 'Ezra'
+
+
+
+    //METHODS FOR CREATING OBJECTS AND TABLE INPUT
+    public void createPet(Pets pet) {
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO pets (" +
+                    "name, animal_type, animal_breed, date_of_birth, gender, weight, owner) " +
+                    "VALUES (" +
+                    "'" + pet.getName() + "'," +
+                    "'" + pet.getAnimalType() + "'," +
+                    "'" + pet.getAnimalBreed() + "'," +
+                    "'" + pet.getDateOfBirth() + "'," +
+                    "'" + pet.getGender() + "'," +
+                    +pet.getWeight() + "," +
+                    "'" + pet.getOwner() + "'" +
+                    ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error creating a Pet : " + exception);
+        }
+    }
+
+    public void createFood(Food food) {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO food (" +
+                    "food_brand, food_bag_weight, daily_amount, purchase_date, pet_id) " +
+                    "VALUES (" +
+                    "'" + food.getFoodBrand() + "'," +
+                    +food.getFoodBagWeight() + "," +
+                    +food.getDailyAmount() + "," +
+                    "'" + food.getPurchaseDate()  + "'," +
+                    + food.getPetId() + ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Food info : " + exception);
+        }
+    }
+
+    public void createMedicine(Medicine medicine) {
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO medicine (" +
+                    "type_of_meds, regularity, date_given, date_to_give_next, pet_id) " +
+                    "VALUES (" +
+                    "'" + medicine.getTypeOfMeds() + "'," +
+                    + medicine.getRegularity() + "," +
+                    "'" + medicine.getDateGiven() + "'," +
+                    "'" + medicine.getDateToGiveNext() + "'," +
+                    + medicine.getPetId() + ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Medicine info : " + exception);
+        }
+    }
+
+    public void createVaccine(Vaccines vaccine) {
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "INSERT INTO vaccines (" +
+                    "vaccination_type, date_vaccinated, date_to_vaccinate_next, pet_id) " +
+                    "VALUES (" +
+                    "'" + vaccine.getVaccinationType() + "'," +
+                    "'" + vaccine.getDateVaccinated() + "'," +
+                    "'" + vaccine.getDateToVaccinateNext() + "'," +
+                    + vaccine.getPetId() + ")";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error entering Vaccination info : " + exception);
+        }
+    }
+
+
+
+
+    //METHODS TO SHOW PET INFORMATION WITHOUT OTHER TABLES
     public ArrayList<Pets> seeAllPets() {
 
         ArrayList<Pets> allPets = new ArrayList<>();
@@ -154,33 +212,6 @@ public class DBConnection {
         return allPets;
     }
 
-    // method for creating a pet
-    public void createPet(Pets pet) {
-
-        try {
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "INSERT INTO pets (" +
-                    "name, animal_type, animal_breed, date_of_birth, gender, weight, owner) " +
-                    "VALUES (" +
-                    "'" + pet.getName() + "'," +
-                    "'" + pet.getAnimalType() + "'," +
-                    "'" + pet.getAnimalBreed() + "'," +
-                    "'" + pet.getDateOfBirth() + "'," +
-                    "'" + pet.getGender() + "'," +
-                    +pet.getWeight() + "," +
-                    "'" + pet.getOwner() + "'" +
-                    ")";
-
-            statement.execute(sqlStatement);
-
-        } catch (SQLException exception) {
-            System.out.println("Error creating a Pet : " + exception);
-        }
-    }
-
-
-    //METHOD TO SHOW THE LIST OF PET NAMES
     public ArrayList<Pets> getPetNames() {
 
         ArrayList<Pets> petList = new ArrayList<>();
@@ -204,8 +235,6 @@ public class DBConnection {
         return petList;
     }
 
-
-    //METHOD TO SHOW ONE PET'S INFORMATION (PET PROFILE)
     public ArrayList<Pets> getOnePet() {
 
         ArrayList<Pets> petJustOne = new ArrayList<>();
@@ -240,46 +269,9 @@ public class DBConnection {
     }
 
 
-//    //method to see vaccination schedule (original, not working)
-//    public ArrayList<Pets> seeVaccinationSchedule() {
-//
-//        ArrayList<Pets> petsVaccinations = new ArrayList<Pets>();
-//
-//        try {
-//            Statement statement = conn.createStatement();
-//            String sqlStatement;
-//
-//            sqlStatement = "SELECT * FROM pets";
-//            ResultSet resultSet = statement.executeQuery(sqlStatement);
-//
-//            sqlStatement =
-//                    "SELECT pets.name AS pet_Name, vaccines.vaccination_type AS vaccine_Title, pets_vaccines.date_to_vaccinate_next AS next_Vaccination " +
-//                            " FROM pets  " +
-//                            " LEFT JOIN pets_vaccines  " +
-//                            " ON pets_vaccines.pet_id = pets.id " +
-//                            " LEFT JOIN vaccines " +
-//                            " ON pets_vaccines.vaccine_id = vaccines.id  " +
-//                            " ORDER BY pets_vaccines.date_to_vaccinate_next";
-//
-//            resultSet = statement.executeQuery(sqlStatement);
-//
-//            while (resultSet.next()) {
-//                String petsName = resultSet.getString("pet_Name");
-//                String vaccineTitle = resultSet.getString("vaccine_Title");
-//                String nextVaccination = resultSet.getString("next_Vaccination");
-//
-//
-//            }
-//        } catch (SQLException exception) {
-//
-//            System.out.println("Error getting vaccination list " + exception);
-//
-//        }
-//        return petsVaccinations;
-//    }
 
 
-    //DIFFERENT method to see vaccination schedule
+    //METHODS TO SELECT AND SEE INFORMATION FROM TABLES
     public void diffSeeVaccinationSchedule() {
 
         try {
@@ -315,8 +307,6 @@ public class DBConnection {
 
     }
 
-
-    //METHOD TO SEE MEDICATION SCHEDULE
     public void seeMedSchedule() {
 
         try {
@@ -351,7 +341,6 @@ public class DBConnection {
 
     }
 
-    // method for seeing all food info
     public ArrayList<Food> seeFoodInfo() {
 
         ArrayList<Food> allFood = new ArrayList<>();
@@ -367,7 +356,6 @@ public class DBConnection {
 
                 // Create new Pet object
                 Food food = new Food();
-                food.setName(rs.getString("id_pet_name"));
                 food.setFoodBrand(rs.getString("food_brand"));
                 food.setFoodBagWeight(rs.getInt("food_bag_weight"));
                 food.setDailyAmount(rs.getInt("daily_amount"));
@@ -389,75 +377,9 @@ public class DBConnection {
     }
 
 
-    //method for creating food
-    public void createFood(Food food) {
-
-        try {
-            Statement statement = conn.createStatement();
-            String sqlStatement = "INSERT INTO food (" +
-                    "id_pet_name, food_brand, food_bag_weight, daily_amount, purchase_date) " +
-                    "VALUES (" +
-                    "'" + food.getName() + "'," +
-                    "'" + food.getFoodBrand() + "'," +
-                    +food.getFoodBagWeight() + "," +
-                    +food.getDailyAmount() + "," +
-                    "'" + food.getPurchaseDate() + "'" +
-                    ")";
-
-            statement.execute(sqlStatement);
-
-        } catch (SQLException exception) {
-            System.out.println("Error entering Food info : " + exception);
-        }
-    }
 
 
-    //method for creating medicine
-    public void createMedicine(Medicine medicine) {
-
-        try {
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "INSERT INTO medicine (" +
-                    "pet_name, type_of_meds, regularity, date_given, date_to_give_next) " +
-                    "VALUES (" +
-                    "'" + medicine.getName() + "'," +
-                    "'" + medicine.getTypeOfMeds() + "'," +
-                    +medicine.getRegularity() + "," +
-                    "'" + medicine.getDateGiven() + "'," +
-                    "'" + medicine.getDateToGiveNext() + "'" +
-                    ")";
-
-            statement.execute(sqlStatement);
-
-        } catch (SQLException exception) {
-            System.out.println("Error entering Medicine info : " + exception);
-        }
-    }
-
-
-    //method for creating vaccine
-    public void createVaccine(Vaccines vaccine) {
-
-        try {
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "INSERT INTO vaccines (" +
-                    "vaccination_type, date_vaccinated, date_to_vaccinate_next) " +
-                    "VALUES (" +
-                    "'" + vaccine.getVaccinationType() + "'," +
-                    "'" + vaccine.getDateVaccinated() + "'," +
-                    "'" + vaccine.getDateToVaccinateNext() + "'" +
-                    ")";
-
-            statement.execute(sqlStatement);
-
-        } catch (SQLException exception) {
-            System.out.println("Error entering Vaccination info : " + exception);
-        }
-    }
-
-    //method to delete a medical record
+    //METHODS TO DELETE RECORDS FROM TABLES
     public void deleteMedRec() {
         try {
 

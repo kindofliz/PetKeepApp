@@ -10,6 +10,7 @@ public class Pets {
     private char gender;         //M/F
     private double weight;       //in kg
     private String owner;        //Name
+    private int id;
     //add allergies as string here
 
 
@@ -29,6 +30,7 @@ public class Pets {
                 " | Gender: " + gender +
                 " | Weight (Kg): " + weight +
                 " | Owner: '" + owner + '\'' +
+                " | ID: '" + id + '\'' +
                 '|';
     }
 
@@ -90,8 +92,11 @@ public class Pets {
         this.owner = owner;
     }
 
+    public int getId() {
+        return id;
+    }
 
-
-
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

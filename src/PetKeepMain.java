@@ -1,3 +1,8 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -17,13 +22,8 @@ public class PetKeepMain {
             System.out.println("===============WELCOME!===============");
             System.out.println();
             System.out.println("What would you like to do?");
-            // 55. "Log in as currentpet"
-            // question - whats your pet name?
-            // slq select * from pets where name = scanner.nextLine();
-            // dabusim esoso informaciju
-            // saglabat ieks current pet
+            System.out.println("0. - Log in as current pet.");
 
-            //beigas velreiz 55 un ielogoties ar citu vardu
 
             System.out.println("1. - Add a new pet."); //almost done, needs cleaning up and reorganizing
             System.out.println("2. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
@@ -38,11 +38,23 @@ public class PetKeepMain {
             System.out.println("11. - Delete a vaccination record.");
             System.out.println("12. - Delete a food record.");
             System.out.println("13. - Delete a pet :( ");
-            System.out.println("0. - Exit!"); //done
+            System.out.println("99. - Exit!"); //done
 
             menuItem = scanner.nextInt();
 
             switch (menuItem) {
+                case 0:
+                    System.out.println("What's your pet's name?");
+                    selectCurrentPet(petKeepDb.conn, scanner, currentPet);
+
+                    // slq select * from pets where name = scanner.nextLine();
+                    // dabusim esoso informaciju
+                    // saglabat ieks current pet
+
+                    //beigas velreiz 0 un ielogoties ar citu vardu
+
+
+                    break;
                 case 1:
                     //ADD A NEW PET
                     // Creating a new Pets object
@@ -82,11 +94,10 @@ public class PetKeepMain {
                     //ADD MEDICAL INFO
 
                     Medicine medicineInfo = new Medicine();
-                    medicineInfo.setPetId(currentPet.getId());
-
 
                     // Moved method to the bottom of PetKeepMain
-                    addMedicine(scanner, medicineInfo);
+                    addMedicine(scanner, medicineInfo, currentPet);
+                    medicineInfo.setPetId(currentPet.getId());
 
                     //Testing until we add databases
                     System.out.println("******TEST******");
@@ -143,17 +154,6 @@ public class PetKeepMain {
                     System.out.println();
                     petKeepDb.diffSeeVaccinationSchedule();
 
-                    //ResultSet resultSet = statement.executeQuery("SELECT * from food");
-                    //ResultSetMetaData rsmd = resultSet.getMetaData();
-                    //int columnsNumber = rsmd.getColumnCount();
-                    //while (resultSet.next()) {
-                    //    for (int i = 1; i <= columnsNumber; i++) {
-                    //        if (i > 1) System.out.print(",  ");
-                    //        String columnValue = resultSet.getString(i);
-                    //        System.out.print(columnValue + " " + rsmd.getColumnName(i));
-                    //    }
-                    //    System.out.println("");
-                    //}
 
                     break;
                 case 8:
@@ -198,13 +198,13 @@ public class PetKeepMain {
 
                     break;
                 default:
-                    if (menuItem != 0)
+                    if (menuItem != 99)
                         System.out.println("Menu item does not exist!");
                     System.out.println();
             }
 
 
-        } while (menuItem != 0);
+        } while (menuItem != 99);
 
 
     }
@@ -319,22 +319,6 @@ public class PetKeepMain {
 
     public static void addFood(Scanner scanner, Food foodInfo) {
 
-        // 0. Asking user to input their pet's name as the id for food
-        String name;
-        int checkName = 0;
-
-        do {
-            System.out.println("Which pet form your pet list are you adding this food item to?");
-            name = scanner.next();
-            if (name.matches("[A-Z][a-zA-Z']*")) {
-                foodInfo.setName(name);
-                checkName = 1;
-            } else {
-                System.out.println("Invalid name.. try again.");
-            }
-        } while (checkName == 0);
-
-
 //        // 1. Asking user to input their Food brand with some validation
         String foodBrand;
         int checkBrand = 0;
@@ -403,22 +387,7 @@ public class PetKeepMain {
 
     }
 
-    public static void addMedicine(Scanner scanner, Medicine medicineInfo) {
-        // 0. Asking user to add their pet's name for this medication
-        String name;
-        int checkName = 0;
-
-        do {
-            System.out.println("Which of your added pet's is this medication for?:");
-            name = scanner.next();
-            if (name.matches("[A-Z][a-zA-Z']*")) {
-                medicineInfo.setName(name);
-                checkName = 1;
-            } else {
-                System.out.println("Invalid name.. try again.");
-            }
-        } while (checkName == 0);
-
+    public static void addMedicine(Scanner scanner, Medicine medicineInfo, Pets currentPet) {
 
         // 1. Asking user to input their name of medicine with some validation
         String typeOfMeds;
@@ -485,6 +454,7 @@ public class PetKeepMain {
             }
         } while (checkNextDate == 0);
 
+
     }
 
     public static void addVaccine(Scanner scanner, Vaccines vaccineInfo) {
@@ -538,6 +508,44 @@ public class PetKeepMain {
         } while (checkNext == 0);
 
     }
+
+
+
+    // method for creating a currentpet
+    public static ArrayList<Pets> selectCurrentPet(Connection conn, Scanner scanner, Pets currentPet) {
+
+        ArrayList<Pets> currentPetList = new ArrayList<>();
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT * FROM pets WHERE name = " + "\'" + scanner.next() + "\'";
+
+            ResultSet rs = statement.executeQuery(sqlStatement);
+
+            while (rs.next()) {
+
+                // Create new Pet object
+                currentPet.setName(rs.getString("name"));
+                currentPet.setAnimalType(rs.getString("animal_type"));
+                currentPet.setAnimalBreed(rs.getString("animal_breed"));
+                currentPet.setDateOfBirth(rs.getString("date_of_birth"));
+                currentPet.setGender(rs.getString("gender").charAt(0));
+                currentPet.setWeight(rs.getInt("weight"));
+                currentPet.setOwner(rs.getString("owner"));
+                currentPet.setId(rs.getInt("id"));
+
+                System.out.println(currentPet);
+            }
+
+
+        } catch (SQLException exception) {
+            System.out.println("Error getting current pet: " + exception);
+        }
+
+        return currentPetList;
+    }
+
 
 
 }

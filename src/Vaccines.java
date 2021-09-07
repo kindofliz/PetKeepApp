@@ -1,9 +1,10 @@
-public class Vaccines extends Pets {
+public class Vaccines{
 
     //Attributes
     private String vaccinationType;  //e.g. Annual
     private String dateVaccinated;
     private String dateToVaccinateNext;
+    private int petId;
 
 
     //no-argument constructor
@@ -46,5 +47,13 @@ public class Vaccines extends Pets {
 
     public void setDateToVaccinateNext(String dateToVaccinateNext) {
         this.dateToVaccinateNext = dateToVaccinateNext;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 }
