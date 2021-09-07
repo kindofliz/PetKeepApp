@@ -89,7 +89,7 @@ public class PetKeepMain {
 
                     System.out.println("VACCINATION SCHEDULE: ");
                     System.out.println();
-                    petKeepDb.diffSeeVaccinationSchedule();
+                    petKeepDb.seeVaccinationSchedule();
 
                     break;
                 case 5:
@@ -162,38 +162,36 @@ public class PetKeepMain {
                     break;
                 case 11:
                     //DELETE MEDICAL RECORD
-
-
+                    System.out.println("Which medicine would you like to delete (name)?");
+                    deleteMedRec(petKeepDb.conn, scanner,currentPet);
 
                     break;
                 case 12:
                     //DELETE VACCINATION RECORD
-
-
+                    System.out.println("Which vaccine would you like to delete (name)?");
+                    deleteVaccRec(petKeepDb.conn, scanner, currentPet);
 
                     break;
                 case 13:
                     //DELETE FOOD RECORD
-
-
-
+                    System.out.println("Which food item would you like to delete (brand)?");
+                    deleteFoodRec(petKeepDb.conn, scanner, currentPet);
 
                     break;
                 case 14:
                     //DELETE A PET
-
-
-
+                    System.out.println("Which pet would you like to delete (name)?");
+                    deletePet(petKeepDb.conn, scanner);
 
                     break;
                 default:
-                    if (menuItem != 99)
+                    if (menuItem != 0)
                         System.out.println("Menu item does not exist!");
                     System.out.println();
             }
 
 
-        } while (menuItem != 99);
+        } while (menuItem != 0);
 
 
     }
@@ -454,7 +452,7 @@ public class PetKeepMain {
         int checkVaccine = 0;
 
         do {
-            System.out.println("Enter type orn name of the vaccine:");
+            System.out.println("Enter type or name of the vaccine:");
             scanner.nextLine(); //making sure the cursor moves to the new line before scanning
             vaccine = scanner.nextLine();
             if (vaccine.matches("[A-Z][A-Za-z'\\-()\\s+]*")) {
@@ -538,6 +536,75 @@ public class PetKeepMain {
         return currentPetList;
     }
 
+
+    //METHODS TO DELETE RECORDS FROM TABLES
+    public static void deleteMedRec(Connection conn, Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM medicine " +
+                    "WHERE medicine.pet_id = " + currentPet.getId() + " AND medicine.type_of_meds LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting medicine : " + exception);
+        }
+        System.out.println("Medical record has been successfully deleted!");
+
+    }
+
+
+    public static void deleteVaccRec(Connection conn, Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM vaccines " +
+                    "WHERE vaccines.pet_id = " + currentPet.getId() + " AND vaccines.vaccination_type LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Vaccination record has been successfully deleted!");
+
+    }
+
+    public static void deleteFoodRec(Connection conn, Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM food " +
+                    "WHERE food.pet_id = " + currentPet.getId() + " AND food.food_brand LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Food item has been successfully deleted!");
+
+    }
+
+    public static void deletePet(Connection conn, Scanner scanner) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM pets " +
+                    "WHERE pets.name = '%" + scanner.next() + "%' ";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Pet record deleted!");
+
+    }
 
 
 }

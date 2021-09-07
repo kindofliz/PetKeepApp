@@ -34,7 +34,7 @@ public class DBConnection {
                                 "owner TEXT NOT NULL )";
 
                 statement.execute(sqlStatement);
-                
+
 
                 //CREATING A TABLE FOR VACCINES
                 sqlStatement =
@@ -279,7 +279,7 @@ public class DBConnection {
 //                ON pets.id = medicine.pet_id
 //                WHERE pets.name = 'Ezra'
 
-    public void diffSeeVaccinationSchedule() {
+    public void seeVaccinationSchedule() {
 
         try {
             Statement statement = conn.createStatement();
@@ -289,18 +289,18 @@ public class DBConnection {
             ResultSet resultSet;
 
             sqlStatement =
-                    "SELECT pets.name AS pet_name, vaccines.vaccination_type AS vaccine_type, vaccines.date_to_vaccinate_next AS next_vaccination " +
+                    " SELECT name, vaccination_type, date_to_vaccinate_next  " +
                             " FROM pets  " +
-                            " JOIN vaccines  " +
-                            " ON pets.id = vaccines.id " +
-                            " ORDER BY vaccines.date_to_vaccinate_next";
+                            " LEFT JOIN vaccines  " +
+                            " ON pets.id = vaccines.pet_id " +
+                            " ORDER BY date_to_vaccinate_next";
 
             resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
-                String petsName = resultSet.getString("pet_name");
-                String vaccineTitle = resultSet.getString("vaccine_type");
-                String nextVaccination = resultSet.getString("next_vaccination");
+                String petsName = resultSet.getString("name");
+                String vaccineTitle = resultSet.getString("vaccination_type");
+                String nextVaccination = resultSet.getString("date_to_vaccinate_next");
 
 
                 System.out.println("Next vaccination date: " + "|" + nextVaccination + "|" + " Vaccine: " + "|" + vaccineTitle + "|" + " PET ---> " + petsName.toUpperCase(Locale.ROOT));
@@ -348,7 +348,7 @@ public class DBConnection {
 
     }
 
-    public ArrayList<Food> seeFoodInfo() {
+    public ArrayList<Food> seeFoodInfo2() {
 
         ArrayList<Food> allFood = new ArrayList<>();
 
@@ -383,6 +383,43 @@ public class DBConnection {
         return allFood;
     }
 
+    public void seeFoodInfo() {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet;
+
+            sqlStatement =
+                    "SELECT name, food_brand, food_bag_weight, daily_amount, purchase_date " +
+                            " FROM pets  " +
+                            " LEFT JOIN food  " +
+                            " ON pets.id = food.pet_id " +
+                            " ORDER BY name";
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+                String petsName = resultSet.getString("name");
+                String foodBrand = resultSet.getString("food_brand");
+                int foodWeight = resultSet.getInt("food_bag_weight");
+                int dailyAmount = resultSet.getInt("daily_amount");
+                String purchaseDate = resultSet.getString("purchase_date");
+
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + " Food Brand: " + "|" + foodBrand + "|" + " Food bag weight: " + "|" + foodWeight +
+                        "(kg)|" + " Daily amount: " + "|" + dailyAmount + "(g)|" + " Purchase Date: " + "|" + purchaseDate + "|");
+
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting medication schedule list " + exception);
+
+        }
+
+    }
+
 
 
 
@@ -400,7 +437,8 @@ public class DBConnection {
 
             Statement statement = conn.createStatement();
             String sqlStatement = "DELETE FROM medicine" +
-                    "WHERE medicine.pet_name = '%" + scanner.next() + "%' AND medicine.type_of_meds LIKE '%'" + scanner.next() + "%'";
+                    "WHERE medicine.pet_id =  AND medicine.type_of_meds LIKE '%'" + scanner.next() + "%'";
+
 
             statement.execute(sqlStatement);
 
