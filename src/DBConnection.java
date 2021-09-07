@@ -79,13 +79,6 @@ public class DBConnection {
     }
 
 
-//SHOWING INFO FROM TWO TABLES
-//                SELECT * FROM
-//                pets
-//                LEFT JOIN medicine
-//                ON pets.id = medicine.pet_id
-//                WHERE pets.name = 'Ezra'
-
 
 
     //METHODS FOR CREATING OBJECTS AND TABLE INPUT
@@ -272,6 +265,14 @@ public class DBConnection {
 
 
     //METHODS TO SELECT AND SEE INFORMATION FROM TABLES
+
+//SHOWING INFO FROM TWO TABLES EXAMPLE
+//                SELECT * FROM
+//                pets
+//                LEFT JOIN medicine
+//                ON pets.id = medicine.pet_id
+//                WHERE pets.name = 'Ezra'
+
     public void diffSeeVaccinationSchedule() {
 
         try {
