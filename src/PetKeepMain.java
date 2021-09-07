@@ -47,13 +47,6 @@ public class PetKeepMain {
                     System.out.println("What's your pet's name?");
                     selectCurrentPet(petKeepDb.conn, scanner, currentPet);
 
-                    // slq select * from pets where name = scanner.nextLine();
-                    // dabusim esoso informaciju
-                    // saglabat ieks current pet
-
-                    //beigas velreiz 0 un ielogoties ar citu vardu
-
-
                     break;
                 case 1:
                     //ADD A NEW PET
@@ -81,12 +74,7 @@ public class PetKeepMain {
                     // Moved method to the bottom of PetKeepMain
                     addFood(scanner, foodInfo);
 
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(foodInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
+                    //Calling the method that inserts this into database
                     petKeepDb.createFood(foodInfo);
 
                     break;
@@ -97,14 +85,11 @@ public class PetKeepMain {
 
                     // Moved method to the bottom of PetKeepMain
                     addMedicine(scanner, medicineInfo, currentPet);
+
+                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
                     medicineInfo.setPetId(currentPet.getId());
 
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(medicineInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
+                    //Calling the method that inserts this into database
                     petKeepDb.createMedicine(medicineInfo);
 
                     break;
@@ -116,12 +101,7 @@ public class PetKeepMain {
                     // Moved method to the bottom of PetKeepMain
                     addVaccine(scanner, vaccineInfo);
 
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(vaccineInfo);
-                    System.out.println("****************");
-
-                    //Calling the method that inserts this into database (needs to be created)
+                    //Calling the method that inserts this into database
                     petKeepDb.createVaccine(vaccineInfo);
 
                     break;
@@ -535,7 +515,7 @@ public class PetKeepMain {
                 currentPet.setOwner(rs.getString("owner"));
                 currentPet.setId(rs.getInt("id"));
 
-                System.out.println(currentPet);
+//                System.out.println(currentPet);
             }
 
 

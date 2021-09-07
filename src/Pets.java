@@ -30,7 +30,6 @@ public class Pets {
                 " | Gender: " + gender +
                 " | Weight (Kg): " + weight +
                 " | Owner: '" + owner + '\'' +
-                " | ID: '" + id + '\'' +
                 '|';
     }
 
