@@ -104,6 +104,10 @@ public class DBConnection {
         } catch (SQLException exception) {
             System.out.println("Error creating a Pet : " + exception);
         }
+
+        System.out.println();
+        System.out.println("Your pet was successfully added!");
+        System.out.println();
     }
 
     public void createFood(Food food) {
@@ -228,6 +232,7 @@ public class DBConnection {
         return petList;
     }
 
+
     public ArrayList<Pets> getOnePet() {
 
         ArrayList<Pets> petJustOne = new ArrayList<>();
@@ -260,6 +265,7 @@ public class DBConnection {
 
         return petJustOne;
     }
+
 
 
 
@@ -318,18 +324,18 @@ public class DBConnection {
             ResultSet resultSet;
 
             sqlStatement =
-                    "SELECT pets.name AS pet_name, medicine.type_of_meds AS medication_type, medicine.date_to_give_next AS administer_meds_next " +
+                    "SELECT name, type_of_meds, date_to_give_next " +
                             " FROM pets  " +
-                            " JOIN medicine  " +
-                            " ON pets.name = medicine.pet_name " +
-                            " ORDER BY medicine.date_to_give_next";
+                            " LEFT JOIN medicine  " +
+                            " ON pets.id = medicine.pet_id " +
+                            " ORDER BY date_to_give_next";
 
             resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
-                String petsName = resultSet.getString("pet_name");
-                String medicineTitle = resultSet.getString("medication_type");
-                String nextMedAdministration = resultSet.getString("administer_meds_next");
+                String petsName = resultSet.getString("name");
+                String medicineTitle = resultSet.getString("type_of_meds");
+                String nextMedAdministration = resultSet.getString("date_to_give_next");
 
                 System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + " Next date to administer meds: " + "|" + nextMedAdministration + "|" + " Medication type: " + "|" + medicineTitle + "|");
 

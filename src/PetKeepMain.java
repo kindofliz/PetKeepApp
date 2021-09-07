@@ -22,30 +22,32 @@ public class PetKeepMain {
             System.out.println("===============WELCOME!===============");
             System.out.println();
             System.out.println("What would you like to do?");
-            System.out.println("0. - Log in as current pet.");
-
-
             System.out.println("1. - Add a new pet."); //almost done, needs cleaning up and reorganizing
-            System.out.println("2. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("3. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("4. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
-            System.out.println("5. - See a list of my pets (by name)."); //done
-            System.out.println("6. - See full information on one pet."); //almost done, but I want to add more information if possible
-            System.out.println("7. - See the vaccination schedule."); //done
-            System.out.println("8. - See the medication schedule."); //done
-            System.out.println("9. - See information about their food."); //done
-            System.out.println("10. - Delete a medication record");
-            System.out.println("11. - Delete a vaccination record.");
-            System.out.println("12. - Delete a food record.");
-            System.out.println("13. - Delete a pet :( ");
-            System.out.println("99. - Exit!"); //done
+            System.out.println("2. - See a list of my pets (by name)."); //done
+            System.out.println("3. - See full information on one pet."); //almost done, but I want to add more information if possible
+            System.out.println("4. - See the vaccination schedule."); //done
+            System.out.println("5. - See the medication schedule."); //done
+            System.out.println("6. - See information about their food."); //done
+            System.out.println();
+            System.out.println("*EDITING YOUR PET PROFILES*");
+            System.out.println("|Before you proceed, please LOG IN using the pet's name whose profile you'd like to edit!|");
+            System.out.println("||If you'd like to switch the pet after logging in, choose menu item 7 once again :) ||");
+            System.out.println();
+            System.out.println("7. - LOG INTO MY PET'S PROFILE");
+            System.out.println("8. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("9. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("10. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
+            System.out.println("11. - Delete a medication record");
+            System.out.println("12. - Delete a vaccination record.");
+            System.out.println("13. - Delete a food record.");
+            System.out.println("14. - Delete a pet :( ");
+            System.out.println("0. - Exit!"); //done
 
             menuItem = scanner.nextInt();
 
             switch (menuItem) {
                 case 0:
-                    System.out.println("What's your pet's name?");
-                    selectCurrentPet(petKeepDb.conn, scanner, currentPet);
+
 
                     break;
                 case 1:
@@ -56,56 +58,11 @@ public class PetKeepMain {
                     // Moved method to the bottom of PetKeepMain
                     addAPet(scanner, myPet);
 
-                    //Testing until we add databases
-                    System.out.println("******TEST******");
-                    System.out.println(myPet);
-                    System.out.println("****************");
-
                     //Calling the method that inserts this into database (needs to be created)
                     petKeepDb.createPet(myPet);
 
                     break;
                 case 2:
-                    //ADD FOOD INFO
-
-                    // Creating a new Food object
-                    Food foodInfo = new Food();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addFood(scanner, foodInfo);
-
-                    //Calling the method that inserts this into database
-                    petKeepDb.createFood(foodInfo);
-
-                    break;
-                case 3:
-                    //ADD MEDICAL INFO
-
-                    Medicine medicineInfo = new Medicine();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addMedicine(scanner, medicineInfo, currentPet);
-
-                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
-                    medicineInfo.setPetId(currentPet.getId());
-
-                    //Calling the method that inserts this into database
-                    petKeepDb.createMedicine(medicineInfo);
-
-                    break;
-                case 4:
-                    //ADD VACCINATION INFO
-
-                    Vaccines vaccineInfo = new Vaccines();
-
-                    // Moved method to the bottom of PetKeepMain
-                    addVaccine(scanner, vaccineInfo);
-
-                    //Calling the method that inserts this into database
-                    petKeepDb.createVaccine(vaccineInfo);
-
-                    break;
-                case 5:
                     //SEE A LIST OF MY PETS
 
                     System.out.println("================= LIST OF MY PETS ================");
@@ -116,7 +73,7 @@ public class PetKeepMain {
                     System.out.println();
 
                     break;
-                case 6:
+                case 3:
                     //SEE INFORMATION ON ONE PET
 
                     System.out.println("Enter a name from the pet list: ");
@@ -127,16 +84,15 @@ public class PetKeepMain {
                     System.out.println("=========================================");
 
                     break;
-                case 7:
+                case 4:
                     //SEE VACCINATION SCHEDULE
 
                     System.out.println("VACCINATION SCHEDULE: ");
                     System.out.println();
                     petKeepDb.diffSeeVaccinationSchedule();
 
-
                     break;
-                case 8:
+                case 5:
                     //SEE MEDICATION SCHEDULE
 
                     System.out.println("MEDICATION SCHEDULE: ");
@@ -144,35 +100,88 @@ public class PetKeepMain {
                     petKeepDb.seeMedSchedule();
 
                     break;
-                case 9:
+                case 6:
                     //SEE FOOD INFO
+
                     System.out.println("FOOD INFORMATION: ");
                     System.out.println();
                     petKeepDb.seeFoodInfo();
 
+                    break;
+                case 7:
 
+                    System.out.println("Log in, using your pet's name from the Pet List.");
+                    selectCurrentPet(petKeepDb.conn, scanner, currentPet);
+
+                    break;
+                case 8:
+                    //ADD FOOD INFO
+
+                    // Creating a new Food object
+                    Food foodInfo = new Food();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addFood(scanner, foodInfo);
+
+                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                    foodInfo.setPetId(currentPet.getId());
+
+                    //Calling the method that inserts this into database
+                    petKeepDb.createFood(foodInfo);
+
+                    break;
+                case 9:
+                    //ADD MEDICAL INFO
+
+                    Medicine medicineInfo = new Medicine();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addMedicine(scanner, medicineInfo);
+
+                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                    medicineInfo.setPetId(currentPet.getId());
+
+                    //Calling the method that inserts this into database
+                    petKeepDb.createMedicine(medicineInfo);
 
                     break;
                 case 10:
+                    //ADD VACCINATION INFO
+
+                    Vaccines vaccineInfo = new Vaccines();
+
+                    // Moved method to the bottom of PetKeepMain
+                    addVaccine(scanner, vaccineInfo);
+
+                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                    vaccineInfo.setPetId(currentPet.getId());
+
+                    //Calling the method that inserts this into database
+                    petKeepDb.createVaccine(vaccineInfo);
+
+                    break;
+                case 11:
                     //DELETE MEDICAL RECORD
 
 
 
                     break;
-                case 11:
+                case 12:
                     //DELETE VACCINATION RECORD
 
 
 
                     break;
-                case 12:
+                case 13:
                     //DELETE FOOD RECORD
 
 
 
+
                     break;
-                case 13:
+                case 14:
                     //DELETE A PET
+
 
 
 
@@ -247,10 +256,10 @@ public class PetKeepMain {
         do {
             System.out.println("Enter your pet's birthday (yyyy-mm-dd):");
             dateOfBirth = scanner.next();
-            if (dateOfBirth.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")){
+            if (dateOfBirth.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 myPet.setDateOfBirth(dateOfBirth);
                 checkDate = 1;
-            } else{
+            } else {
                 System.out.println("Invalid date format.. try again.");
                 System.out.println();
             }
@@ -295,6 +304,7 @@ public class PetKeepMain {
                 System.out.println("Invalid owner's name.. try again.");
             }
         } while (checkOwner == 0);
+
     }
 
     public static void addFood(Scanner scanner, Food foodInfo) {
@@ -337,7 +347,7 @@ public class PetKeepMain {
         int checkAmount = 0;
 
         do {
-            System.out.println("Enter daily amount of food to be fed: ");
+            System.out.println("Enter daily amount of food to be fed (grams): ");
             dailyAmount = scanner.nextInt();
             if (dailyAmount > 0) {
                 foodInfo.setDailyAmount(dailyAmount);
@@ -353,7 +363,7 @@ public class PetKeepMain {
         int checkDate = 0;
 
         do {
-            System.out.println("Enter purchase date (yyy-mm-dd):");
+            System.out.println("Enter purchase date (yyyy-mm-dd):");
             dateOfPurchase = scanner.next();
 
             if (dateOfPurchase.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
@@ -367,7 +377,7 @@ public class PetKeepMain {
 
     }
 
-    public static void addMedicine(Scanner scanner, Medicine medicineInfo, Pets currentPet) {
+    public static void addMedicine(Scanner scanner, Medicine medicineInfo) {
 
         // 1. Asking user to input their name of medicine with some validation
         String typeOfMeds;
@@ -407,7 +417,7 @@ public class PetKeepMain {
         int checkDate = 0;
 
         do {
-            System.out.println("Enter first date medicine was given (yyy-mm-dd):");
+            System.out.println("Enter first date medicine was given (yyyy-mm-dd):");
             dateGiven = scanner.next();
             if (dateGiven.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
                 medicineInfo.setDateGiven(dateGiven);
@@ -490,8 +500,7 @@ public class PetKeepMain {
     }
 
 
-
-    // method for creating a currentpet
+    //METHOD FOR CREATING THE CURRENT-PET OBJECT AND GETTING IT'S ID
     public static ArrayList<Pets> selectCurrentPet(Connection conn, Scanner scanner, Pets currentPet) {
 
         ArrayList<Pets> currentPetList = new ArrayList<>();
@@ -499,7 +508,7 @@ public class PetKeepMain {
         try {
 
             Statement statement = conn.createStatement();
-            String sqlStatement = "SELECT * FROM pets WHERE name = " + "\'" + scanner.next() + "\'";
+            String sqlStatement = "SELECT * FROM pets WHERE name = " + "'" + scanner.next() + "'";
 
             ResultSet rs = statement.executeQuery(sqlStatement);
 
@@ -522,6 +531,9 @@ public class PetKeepMain {
         } catch (SQLException exception) {
             System.out.println("Error getting current pet: " + exception);
         }
+
+        System.out.println();
+        System.out.println("Log In successful!");
 
         return currentPetList;
     }
