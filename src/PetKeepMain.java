@@ -27,20 +27,20 @@ public class PetKeepMain {
             System.out.println("3. - See full information on one pet."); //almost done, but I want to add more information if possible
             System.out.println("4. - See the vaccination schedule."); //done
             System.out.println("5. - See the medication schedule."); //done
-            System.out.println("6. - See information about their food."); //done
+            System.out.println("6. - See information about their food."); //done , but needs more fun info
+            System.out.println("7. - Delete a pet.");
             System.out.println();
             System.out.println("*EDITING YOUR PET PROFILES*");
             System.out.println("|Before you proceed, please LOG IN using the pet's name whose profile you'd like to edit!|");
             System.out.println("||If you'd like to switch the pet after logging in, choose menu item 7 once again :) ||");
             System.out.println();
-            System.out.println("7. - LOG INTO MY PET'S PROFILE");
-            System.out.println("8. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("9. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("10. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
-            System.out.println("11. - Delete a medication record");
-            System.out.println("12. - Delete a vaccination record.");
-            System.out.println("13. - Delete a food record.");
-            System.out.println("14. - Delete a pet :( ");
+            System.out.println("8. - LOG INTO MY PET'S PROFILE");
+            System.out.println("9. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("10. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
+            System.out.println("11. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
+            System.out.println("12. - Delete a medication record"); //done
+            System.out.println("13. - Delete a vaccination record."); //done
+            System.out.println("14. - Delete a food record."); //done
             System.out.println("0. - Exit!"); //done
 
             menuItem = scanner.nextInt();
@@ -109,12 +109,18 @@ public class PetKeepMain {
 
                     break;
                 case 7:
+                    //DELETE A PET
+                    System.out.println("Which pet would you like to delete (name)?");
+                    deletePet(petKeepDb.conn, scanner);
+
+                    break;
+                case 8:
 
                     System.out.println("Log in, using your pet's name from the Pet List.");
                     selectCurrentPet(petKeepDb.conn, scanner, currentPet);
 
                     break;
-                case 8:
+                case 9:
                     //ADD FOOD INFO
 
                     // Creating a new Food object
@@ -130,7 +136,7 @@ public class PetKeepMain {
                     petKeepDb.createFood(foodInfo);
 
                     break;
-                case 9:
+                case 10:
                     //ADD MEDICAL INFO
 
                     Medicine medicineInfo = new Medicine();
@@ -145,7 +151,7 @@ public class PetKeepMain {
                     petKeepDb.createMedicine(medicineInfo);
 
                     break;
-                case 10:
+                case 11:
                     //ADD VACCINATION INFO
 
                     Vaccines vaccineInfo = new Vaccines();
@@ -160,28 +166,22 @@ public class PetKeepMain {
                     petKeepDb.createVaccine(vaccineInfo);
 
                     break;
-                case 11:
+                case 12:
                     //DELETE MEDICAL RECORD
                     System.out.println("Which medicine would you like to delete (name)?");
                     deleteMedRec(petKeepDb.conn, scanner,currentPet);
 
                     break;
-                case 12:
+                case 13:
                     //DELETE VACCINATION RECORD
                     System.out.println("Which vaccine would you like to delete (name)?");
                     deleteVaccRec(petKeepDb.conn, scanner, currentPet);
 
                     break;
-                case 13:
+                case 14:
                     //DELETE FOOD RECORD
                     System.out.println("Which food item would you like to delete (brand)?");
                     deleteFoodRec(petKeepDb.conn, scanner, currentPet);
-
-                    break;
-                case 14:
-                    //DELETE A PET
-                    System.out.println("Which pet would you like to delete (name)?");
-                    deletePet(petKeepDb.conn, scanner);
 
                     break;
                 default:
@@ -196,6 +196,7 @@ public class PetKeepMain {
 
     }
 
+    //METHODS TO ADD (FOR USER) ITEMS
     public static void addAPet(Scanner scanner, Pets myPet) {
 
         // 1. Asking user to input their pet's name with some validation
@@ -555,7 +556,6 @@ public class PetKeepMain {
 
     }
 
-
     public static void deleteVaccRec(Connection conn, Scanner scanner, Pets currentPet) {
         try {
 
@@ -595,7 +595,7 @@ public class PetKeepMain {
 
             Statement statement = conn.createStatement();
             String sqlStatement = "DELETE FROM pets " +
-                    "WHERE pets.name = '%" + scanner.next() + "%' ";
+                    "WHERE pets.name LIKE '%" + scanner.next() + "%' ";
 
             statement.execute(sqlStatement);
 

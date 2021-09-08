@@ -232,7 +232,6 @@ public class DBConnection {
         return petList;
     }
 
-
     public ArrayList<Pets> getOnePet() {
 
         ArrayList<Pets> petJustOne = new ArrayList<>();
@@ -269,16 +268,7 @@ public class DBConnection {
 
 
 
-
     //METHODS TO SELECT AND SEE INFORMATION FROM TABLES
-
-//SHOWING INFO FROM TWO TABLES EXAMPLE
-//                SELECT * FROM
-//                pets
-//                LEFT JOIN medicine
-//                ON pets.id = medicine.pet_id
-//                WHERE pets.name = 'Ezra'
-
     public void seeVaccinationSchedule() {
 
         try {
@@ -348,41 +338,6 @@ public class DBConnection {
 
     }
 
-    public ArrayList<Food> seeFoodInfo2() {
-
-        ArrayList<Food> allFood = new ArrayList<>();
-
-        try {
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "SELECT * FROM food";
-
-            ResultSet rs = statement.executeQuery(sqlStatement);
-
-            while (rs.next()) {
-
-                // Create new Pet object
-                Food food = new Food();
-                food.setFoodBrand(rs.getString("food_brand"));
-                food.setFoodBagWeight(rs.getInt("food_bag_weight"));
-                food.setDailyAmount(rs.getInt("daily_amount"));
-                food.setPurchaseDate(rs.getString("purchase_date"));
-
-                System.out.println(food);
-                System.out.println();
-                System.out.println("This food bag will last you: " + food.foodDays() + " days from purchase date!");
-                System.out.println("You will need to buy a new bag by: " + food.buyFood());
-                System.out.println();
-            }
-
-
-        } catch (SQLException exception) {
-            System.out.println("Error getting Pet list: " + exception);
-        }
-
-        return allFood;
-    }
-
     public void seeFoodInfo() {
 
         try {
@@ -418,33 +373,6 @@ public class DBConnection {
 
         }
 
-    }
-
-
-
-
-    //METHODS TO DELETE RECORDS FROM TABLES
-    public void deleteMedRec() {
-        try {
-
-//            DELETE FROM employees
-//            WHERE EXISTS
-//            ( SELECT *
-//                    FROM contacts
-//            WHERE contacts.contact_id = employees.employee_id
-//            AND contacts.contact_id < 100 );
-
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "DELETE FROM medicine" +
-                    "WHERE medicine.pet_id =  AND medicine.type_of_meds LIKE '%'" + scanner.next() + "%'";
-
-
-            statement.execute(sqlStatement);
-
-        } catch (SQLException exception) {
-            System.out.println("Error entering Vaccination info : " + exception);
-        }
     }
 
 
