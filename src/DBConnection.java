@@ -79,7 +79,7 @@ public class DBConnection {
     }
 
 
-    //METHODS FOR CREATING OBJECTS AND DATA INPUT INTO TABLES
+    //METHODS FOR CREATING OBJECTS AND DATA INPUT INTO DB TABLES
     public void createPet(Pets pet) {
 
         try {
@@ -171,10 +171,7 @@ public class DBConnection {
 
 
 
-
-    //COULD BE MOVED TO MAIN???
     //METHODS TO SHOW PET INFORMATION
-
     public ArrayList<Pets> getPetList() {
 
         ArrayList<Pets> petList = new ArrayList<>();
@@ -459,6 +456,115 @@ public class DBConnection {
 
         return allFood;
     }
+
+
+    //METHOD FOR CREATING THE CURRENT-PET OBJECT AND GETTING IT'S ID
+    public ArrayList<Pets> selectCurrentPet(Scanner scanner, Pets currentPet) {
+
+        ArrayList<Pets> currentPetList = new ArrayList<>();
+
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT * FROM pets WHERE name = " + "'" + scanner.next() + "'";
+
+            ResultSet rs = statement.executeQuery(sqlStatement);
+
+            while (rs.next()) {
+
+                // Create new Pet object
+                currentPet.setName(rs.getString("name"));
+                currentPet.setAnimalType(rs.getString("animal_type"));
+                currentPet.setAnimalBreed(rs.getString("animal_breed"));
+                currentPet.setDateOfBirth(rs.getString("date_of_birth"));
+                currentPet.setGender(rs.getString("gender").charAt(0));
+                currentPet.setWeight(rs.getInt("weight"));
+                currentPet.setOwner(rs.getString("owner"));
+                currentPet.setId(rs.getInt("id"));
+
+//                System.out.println(currentPet);
+            }
+
+
+        } catch (SQLException exception) {
+            System.out.println("Error getting current pet: " + exception);
+        }
+
+        System.out.println();
+        System.out.println("Log In successful!");
+
+        return currentPetList;
+    }
+
+
+    //METHODS TO DELETE RECORDS FROM TABLES
+    public void deleteMedRec(Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM medicine " +
+                    "WHERE medicine.pet_id = " + currentPet.getId() + " AND medicine.type_of_meds LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting medicine : " + exception);
+        }
+        System.out.println("Medical record has been successfully deleted!");
+
+    }
+
+    public void deleteVaccRec(Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM vaccines " +
+                    "WHERE vaccines.pet_id = " + currentPet.getId() + " AND vaccines.vaccination_type LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Vaccination record has been successfully deleted!");
+
+    }
+
+    public void deleteFoodRec(Scanner scanner, Pets currentPet) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM food " +
+                    "WHERE food.pet_id = " + currentPet.getId() + " AND food.food_brand LIKE '%" + scanner.next() + "%' ";
+
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Food item has been successfully deleted!");
+
+    }
+
+    public void deletePet(Scanner scanner) {
+        try {
+
+            Statement statement = conn.createStatement();
+            String sqlStatement = "DELETE FROM pets " +
+                    "WHERE pets.name LIKE '%" + scanner.next() + "%' ";
+
+            statement.execute(sqlStatement);
+
+        } catch (SQLException exception) {
+            System.out.println("Error deleting vaccine : " + exception);
+        }
+        System.out.println("Pet record deleted!");
+
+    }
+
 
 
 
