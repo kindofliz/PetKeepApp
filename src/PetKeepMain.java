@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -22,22 +23,22 @@ public class PetKeepMain {
             System.out.println("===============WELCOME!===============");
             System.out.println();
             System.out.println("What would you like to do?");
-            System.out.println("1. - Add a new pet."); //almost done, needs cleaning up and reorganizing
-            System.out.println("2. - See a list of my pets (by name)."); //done
-            System.out.println("3. - See full information on one pet."); //almost done, but I want to add more information if possible
-            System.out.println("4. - See the vaccination schedule."); //done
-            System.out.println("5. - See the medication schedule."); //done
-            System.out.println("6. - See information about their food."); //done , but needs more fun info
+            System.out.println("1. - Add a new pet."); //needs cleaning up and reorganizing
+            System.out.println("2. - See my pet list."); //done
+            System.out.println("3. - See a pet's complete profile."); //almost done, but I want to add more information if possible
+            System.out.println("4. - See vaccination schedule."); //done
+            System.out.println("5. - See medication schedule."); //done
+            System.out.println("6. - See food information."); //done , but needs more fun info
             System.out.println("7. - Delete a pet.");
             System.out.println();
-            System.out.println("*EDITING YOUR PET PROFILES*");
+            System.out.println("EDITING YOUR PET PROFILES");
             System.out.println("|Before you proceed, please LOG IN using the pet's name whose profile you'd like to edit!|");
             System.out.println("||If you'd like to switch the pet after logging in, choose menu item 7 once again :) ||");
             System.out.println();
             System.out.println("8. - LOG INTO MY PET'S PROFILE");
-            System.out.println("9. - Add my pet's food information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("10. - Add my pet's medication information."); //almost done, needs cleaning up and reorganizing
-            System.out.println("11. - Add my pet's vaccination information."); // almost done, needs cleaning up and reorganizing
+            System.out.println("9. - Add my pet's food information."); //needs cleaning up and reorganizing
+            System.out.println("10. - Add my pet's medication information."); //needs cleaning up and reorganizing
+            System.out.println("11. - Add my pet's vaccination information."); //needs cleaning up and reorganizing
             System.out.println("12. - Delete a medication record"); //done
             System.out.println("13. - Delete a vaccination record."); //done
             System.out.println("14. - Delete a food record."); //done
@@ -66,22 +67,16 @@ public class PetKeepMain {
                     //SEE A LIST OF MY PETS
 
                     System.out.println("================= LIST OF MY PETS ================");
-
-                    petKeepDb.getPetNames();
-
+                    petKeepDb.getPetList();
                     System.out.println("==================================================");
                     System.out.println();
 
                     break;
                 case 3:
                     //SEE INFORMATION ON ONE PET
-
                     System.out.println("Enter a name from the pet list: ");
                     //Calling the method to SELECT all the info about chosen pet from DB
-
-                    System.out.println("================= MY PET ================");
-                    petKeepDb.getOnePet();
-                    System.out.println("=========================================");
+                    petKeepDb.getPetProfile();
 
                     break;
                 case 4:
@@ -105,7 +100,7 @@ public class PetKeepMain {
 
                     System.out.println("FOOD INFORMATION: ");
                     System.out.println();
-                    petKeepDb.seeFoodInfo();
+                    petKeepDb.seeFoodInfoList();
 
                     break;
                 case 7:

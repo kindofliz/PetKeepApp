@@ -21,10 +21,9 @@ public class Food {
     //METHODS
     @Override
     public String toString() {
-        return "FOOD" + " --> " +
-                "| Food brand: '" + foodBrand + '\'' +
+        return "| Food brand: '" + foodBrand + '\'' +
                 "| Purchased bag weight: " + foodBagWeight + " kg " +
-                "| Daily consumption amount: " + dailyAmount + " grams " +
+                "| Daily feeding: " + dailyAmount + " grams " +
                 "| Purchase date: '" + purchaseDate + '\'' +
                 '|';
     }

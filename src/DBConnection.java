@@ -79,9 +79,7 @@ public class DBConnection {
     }
 
 
-
-
-    //METHODS FOR CREATING OBJECTS AND TABLE INPUT
+    //METHODS FOR CREATING OBJECTS AND DATA INPUT INTO TABLES
     public void createPet(Pets pet) {
 
         try {
@@ -174,42 +172,10 @@ public class DBConnection {
 
 
 
-    //METHODS TO SHOW PET INFORMATION WITHOUT OTHER TABLES
-    public ArrayList<Pets> seeAllPets() {
+    //COULD BE MOVED TO MAIN???
+    //METHODS TO SHOW PET INFORMATION
 
-        ArrayList<Pets> allPets = new ArrayList<>();
-
-        try {
-
-            Statement statement = conn.createStatement();
-            String sqlStatement = "SELECT * FROM pets";
-
-            ResultSet rs = statement.executeQuery(sqlStatement);
-
-            while (rs.next()) {
-
-                // Create new Pet object
-                Pets pet = new Pets();
-                pet.setName(rs.getString("name"));
-                pet.setAnimalType(rs.getString("animal_type"));
-                pet.setAnimalBreed(rs.getString("animal_breed"));
-                pet.setDateOfBirth(rs.getString("date_of_birth"));
-                pet.setGender(rs.getString("gender").charAt(0));
-                pet.setWeight(rs.getInt("weight"));
-                pet.setOwner(rs.getString("owner"));
-
-                System.out.println(pet);
-            }
-
-
-        } catch (SQLException exception) {
-            System.out.println("Error getting Pet list: " + exception);
-        }
-
-        return allPets;
-    }
-
-    public ArrayList<Pets> getPetNames() {
+    public ArrayList<Pets> getPetList() {
 
         ArrayList<Pets> petList = new ArrayList<>();
 
@@ -232,7 +198,7 @@ public class DBConnection {
         return petList;
     }
 
-    public ArrayList<Pets> getOnePet() {
+    public ArrayList<Pets> getPetProfile() {
 
         ArrayList<Pets> petJustOne = new ArrayList<>();
 
@@ -246,6 +212,7 @@ public class DBConnection {
             while (rs.next()) {
                 //Create a new Pet object
                 Pets pet = new Pets();
+                pet.setId(rs.getInt("id"));
                 pet.setName(rs.getString("name"));
                 pet.setAnimalType(rs.getString("animal_type"));
                 pet.setAnimalBreed(rs.getString("animal_breed"));
@@ -254,8 +221,18 @@ public class DBConnection {
                 pet.setWeight(rs.getDouble("weight"));
                 pet.setOwner(rs.getString("owner"));
 
-
+                System.out.println("=========================================================== MY PET ===========================================================");
                 System.out.println(pet);
+                System.out.println();
+                System.out.println("Additional Info: ");
+                System.out.println();
+                System.out.println(pet.getName() + " is: ");
+                pet.petAge();
+                System.out.println();
+                seePtExtraVaccines(pet);
+                seePtExtraMeds(pet);
+                seePtExtraFood(pet);
+                System.out.println("==============================================================================================================================");
             }
 
         } catch (SQLException exception) {
@@ -266,9 +243,112 @@ public class DBConnection {
     }
 
 
+    //METHODS TO ADD ALL INFO TO ONE PETS PROFILE
+    public void seePtExtraVaccines(Pets pet) {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet;
+
+            sqlStatement =
+                    "SELECT * FROM pets  " +
+                            " LEFT JOIN vaccines  " +
+                            " ON pets.id = vaccines.pet_id " +
+                            " WHERE pets.id = " + pet.getId();
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+                String petsVaccine = resultSet.getString("vaccination_type");
+                String petsDateVaccinated = resultSet.getString("date_vaccinated");
+                String petsDateNext = resultSet.getString("date_to_vaccinate_next");
+
+                System.out.println("VACCINE: " + petsVaccine + " || Date vaccinated: " + petsDateVaccinated + " || Next Vaccination: " + petsDateNext);
+
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting pet profile information (vaccines) " + exception);
+
+        }
+
+    }
+
+    public void seePtExtraMeds(Pets pet) {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet;
+
+            sqlStatement =
+                    "SELECT * FROM pets  " +
+                            " LEFT JOIN medicine  " +
+                            " ON pets.id = medicine.pet_id " +
+                            " WHERE pets.id = " + pet.getId();
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+
+                String petsMeds = resultSet.getString("type_of_meds");
+                String petsMedGiven = resultSet.getString("date_given");
+                String petsGiveNext = resultSet.getString("date_to_give_next");
+
+                System.out.println("MEDS: " + petsMeds + " || Date given: " + petsMedGiven + " || Date to give next: " + petsGiveNext);
+
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting pet profile information (meds) " + exception);
+
+        }
+
+    }
+
+    public void seePtExtraFood(Pets pet) {
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement;
+
+            sqlStatement = "SELECT * FROM pets";
+            ResultSet resultSet;
+
+            sqlStatement =
+                    "SELECT * FROM pets  " +
+                            " LEFT JOIN food  " +
+                            " ON pets.id = food.pet_id " +
+                            " WHERE pets.id = " + pet.getId();
+
+            resultSet = statement.executeQuery(sqlStatement);
+
+            while (resultSet.next()) {
+
+                String foodBrand = resultSet.getString("food_brand");
+                int foodWeight = resultSet.getInt("food_bag_weight");
+                int dailyAmount = resultSet.getInt("daily_amount");
+                String purchaseDate = resultSet.getString("purchase_date");
+
+                System.out.println("FOOD: " +  foodBrand +  " || Food bag weight: " + foodWeight + "(kg)" + " || Daily amount: " + dailyAmount + "(g)" + " || Purchase Date: " + purchaseDate);
 
 
-    //METHODS TO SELECT AND SEE INFORMATION FROM TABLES
+            }
+        } catch (SQLException exception) {
+
+            System.out.println("Error getting pet profile information (food) " + exception);
+
+        }
+
+    }
+
+
+    //METHODS TO SELECT AND SEE INFORMATION FROM TABLES - ALL PETS
     public void seeVaccinationSchedule() {
 
         try {
@@ -338,42 +418,49 @@ public class DBConnection {
 
     }
 
-    public void seeFoodInfo() {
+    public ArrayList<Food> seeFoodInfoList() {
+
+        ArrayList<Food> allFood = new ArrayList<>();
 
         try {
+
             Statement statement = conn.createStatement();
-            String sqlStatement;
-
-            sqlStatement = "SELECT * FROM pets";
-            ResultSet resultSet;
-
-            sqlStatement =
+            String sqlStatement =
                     "SELECT name, food_brand, food_bag_weight, daily_amount, purchase_date " +
-                            " FROM pets  " +
-                            " LEFT JOIN food  " +
-                            " ON pets.id = food.pet_id " +
-                            " ORDER BY name";
+                    " FROM pets  " +
+                    " LEFT JOIN food  " +
+                    " ON pets.id = food.pet_id " +
+                    " ORDER BY name";
 
-            resultSet = statement.executeQuery(sqlStatement);
+            ResultSet resultSet = statement.executeQuery(sqlStatement);
 
             while (resultSet.next()) {
+
+                // Create new Pet object
+                Food food = new Food();
                 String petsName = resultSet.getString("name");
-                String foodBrand = resultSet.getString("food_brand");
-                int foodWeight = resultSet.getInt("food_bag_weight");
-                int dailyAmount = resultSet.getInt("daily_amount");
-                String purchaseDate = resultSet.getString("purchase_date");
+                food.setFoodBrand(resultSet.getString("food_brand"));
+                food.setFoodBagWeight(resultSet.getInt("food_bag_weight"));
+                food.setDailyAmount(resultSet.getInt("daily_amount"));
+                food.setPurchaseDate(resultSet.getString("purchase_date"));
 
-                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + " Food Brand: " + "|" + foodBrand + "|" + " Food bag weight: " + "|" + foodWeight +
-                        "(kg)|" + " Daily amount: " + "|" + dailyAmount + "(g)|" + " Purchase Date: " + "|" + purchaseDate + "|");
 
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + food);
+                System.out.println();
+                System.out.println("This food bag will last you: " + food.foodDays() + " days from purchase date!");
+                System.out.println("You will need to buy a new bag by: " + food.buyFood());
+                System.out.println();
             }
+
+
         } catch (SQLException exception) {
-
-            System.out.println("Error getting medication schedule list " + exception);
-
+            System.out.println("Error getting Pet list: " + exception);
         }
 
+        return allFood;
     }
+
+
 
 
 }
