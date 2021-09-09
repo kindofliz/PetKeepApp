@@ -53,12 +53,17 @@ public class PetKeepMain {
                     // Creating a new Pets object
                     Pets myPet = new Pets();
 
-                    // Moved method to the bottom of PetKeepMain
-                    addAPet(scanner, myPet);
+                    //Making sure user can escape input if opened accidentally
+                    System.out.println("[To continue press Y]");
+                    System.out.println("[To go back press  N]");
+                    if (scanner.next().equalsIgnoreCase("y")) {
 
-                    //Calling the method that inserts this into database (needs to be created)
-                    petKeepDb.createPet(myPet);
+                        // Moved method to the bottom of PetKeepMain
+                        addAPet(scanner, myPet);
 
+                        //Calling the method that inserts this into database (needs to be created)
+                        petKeepDb.createPet(myPet);
+                    }
                     break;
                 case 2:
                     //SEE A LIST OF MY PETS
@@ -113,42 +118,57 @@ public class PetKeepMain {
                     // Creating a new Food object
                     Food foodInfo = new Food();
 
-                    // Moved method to the bottom of PetKeepMain
-                    addFood(scanner, foodInfo);
+                    //Making sure user can escape input if opened accidentally
+                    System.out.println("[To continue press Y]");
+                    System.out.println("[To go back press  N]");
+                    if (scanner.next().equalsIgnoreCase("y")) {
 
-                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
-                    foodInfo.setPetId(currentPet.getId());
+                        // Moved method to the bottom of PetKeepMain
+                        addFood(scanner, foodInfo);
 
-                    //Calling the method that inserts this into database
-                    petKeepDb.createFood(foodInfo);
+                        //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                        foodInfo.setPetId(currentPet.getId());
 
+                        //Calling the method that inserts this into database
+                        petKeepDb.createFood(foodInfo);
+                    }
                     break;
                 case 10:
                     //ADD MEDICAL INFO
                     Medicine medicineInfo = new Medicine();
 
-                    // Moved method to the bottom of PetKeepMain
-                    addMedicine(scanner, medicineInfo);
+                    //Making sure user can escape input if opened accidentally
+                    System.out.println("[To continue press Y]");
+                    System.out.println("[To go back press  N]");
+                    if (scanner.next().equalsIgnoreCase("y")) {
 
-                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
-                    medicineInfo.setPetId(currentPet.getId());
+                        // Moved method to the bottom of PetKeepMain
+                        addMedicine(scanner, medicineInfo);
 
-                    //Calling the method that inserts this into database
-                    petKeepDb.createMedicine(medicineInfo);
+                        //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                        medicineInfo.setPetId(currentPet.getId());
 
+                        //Calling the method that inserts this into database
+                        petKeepDb.createMedicine(medicineInfo);
+                    }
                     break;
                 case 11:
                     //ADD VACCINATION INFO
                     Vaccines vaccineInfo = new Vaccines();
+                    //Making sure user can escape input if opened accidentally
+                    System.out.println("[To continue press Y]");
+                    System.out.println("[To go back press  N]");
+                    if (scanner.next().equalsIgnoreCase("y")) {
 
-                    // Moved method to the bottom of PetKeepMain
-                    addVaccine(scanner, vaccineInfo);
+                        // Moved method to the bottom of PetKeepMain
+                        addVaccine(scanner, vaccineInfo);
 
-                    //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
-                    vaccineInfo.setPetId(currentPet.getId());
+                        //Getting chosen current pet's pet id from pets table and setting it as pet_id in medicine table for this record
+                        vaccineInfo.setPetId(currentPet.getId());
 
-                    //Calling the method that inserts this into database
-                    petKeepDb.createVaccine(vaccineInfo);
+                        //Calling the method that inserts this into database
+                        petKeepDb.createVaccine(vaccineInfo);
+                    }
 
                     break;
                 case 12:

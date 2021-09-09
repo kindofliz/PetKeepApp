@@ -109,10 +109,6 @@ public class DBConnection {
         } catch (SQLException exception) {
             System.out.println("Error creating a Pet : " + exception);
         }
-
-        System.out.println();
-        System.out.println("Your pet was successfully added!");
-        System.out.println();
     }
 
     public void createFood(Food food) {
@@ -598,7 +594,7 @@ public class DBConnection {
             if (rowsAffected != 0) {
                 System.out.println("Pet was deleted successfully!");
             } else {
-                System.out.println("Error. Selected pet not found!");
+                System.out.println("Sorry.. couldn't find a pet with this name.");
             }
 
         } catch (SQLException exception) {
