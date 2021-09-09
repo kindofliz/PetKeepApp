@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -97,7 +98,13 @@ public class DBConnection {
                     "'" + pet.getOwner() + "'" +
                     ")";
 
-            statement.execute(sqlStatement);
+            int rowsAffected = statement.executeUpdate(sqlStatement);
+
+            if (rowsAffected != 0) {
+                System.out.println("Pet added successfully!");
+            } else {
+                System.out.println("Sorry.. Something went wrong! Try again.");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error creating a Pet : " + exception);
@@ -118,10 +125,16 @@ public class DBConnection {
                     "'" + food.getFoodBrand() + "'," +
                     +food.getFoodBagWeight() + "," +
                     +food.getDailyAmount() + "," +
-                    "'" + food.getPurchaseDate()  + "'," +
-                    + food.getPetId() + ")";
+                    "'" + food.getPurchaseDate() + "'," +
+                    +food.getPetId() + ")";
 
-            statement.execute(sqlStatement);
+            int rowsAffected = statement.executeUpdate(sqlStatement);
+
+            if (rowsAffected != 0) {
+                System.out.println("Food item added successfully!");
+            } else {
+                System.out.println("Sorry.. Something went wrong! Try again.");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error entering Food info : " + exception);
@@ -137,12 +150,18 @@ public class DBConnection {
                     "type_of_meds, regularity, date_given, date_to_give_next, pet_id) " +
                     "VALUES (" +
                     "'" + medicine.getTypeOfMeds() + "'," +
-                    + medicine.getRegularity() + "," +
+                    +medicine.getRegularity() + "," +
                     "'" + medicine.getDateGiven() + "'," +
                     "'" + medicine.getDateToGiveNext() + "'," +
-                    + medicine.getPetId() + ")";
+                    +medicine.getPetId() + ")";
 
-            statement.execute(sqlStatement);
+            int rowsAffected = statement.executeUpdate(sqlStatement);
+
+            if (rowsAffected != 0) {
+                System.out.println("Medical record added successfully!");
+            } else {
+                System.out.println("Sorry.. Something went wrong! Try again.");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error entering Medicine info : " + exception);
@@ -160,15 +179,20 @@ public class DBConnection {
                     "'" + vaccine.getVaccinationType() + "'," +
                     "'" + vaccine.getDateVaccinated() + "'," +
                     "'" + vaccine.getDateToVaccinateNext() + "'," +
-                    + vaccine.getPetId() + ")";
+                    +vaccine.getPetId() + ")";
 
-            statement.execute(sqlStatement);
+            int rowsAffected = statement.executeUpdate(sqlStatement);
+
+            if (rowsAffected != 0) {
+                System.out.println("Vaccine record added successfully!");
+            } else {
+                System.out.println("Sorry.. Something went wrong! Try again.");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error entering Vaccination info : " + exception);
         }
     }
-
 
 
     //METHODS TO SHOW PET INFORMATION
@@ -332,7 +356,7 @@ public class DBConnection {
                 int dailyAmount = resultSet.getInt("daily_amount");
                 String purchaseDate = resultSet.getString("purchase_date");
 
-                System.out.println("FOOD: " +  foodBrand +  " || Food bag weight: " + foodWeight + "(kg)" + " || Daily amount: " + dailyAmount + "(g)" + " || Purchase Date: " + purchaseDate);
+                System.out.println("FOOD: " + foodBrand + " || Food bag weight: " + foodWeight + "(kg)" + " || Daily amount: " + dailyAmount + "(g)" + " || Purchase Date: " + purchaseDate);
 
 
             }
@@ -424,10 +448,10 @@ public class DBConnection {
             Statement statement = conn.createStatement();
             String sqlStatement =
                     "SELECT name, food_brand, food_bag_weight, daily_amount, purchase_date " +
-                    " FROM pets  " +
-                    " LEFT JOIN food  " +
-                    " ON pets.id = food.pet_id " +
-                    " ORDER BY name";
+                            " FROM pets  " +
+                            " LEFT JOIN food  " +
+                            " ON pets.id = food.pet_id " +
+                            " ORDER BY name";
 
             ResultSet resultSet = statement.executeQuery(sqlStatement);
 
@@ -491,8 +515,11 @@ public class DBConnection {
         }
 
         System.out.println();
-        System.out.println("Log In successful!");
-
+        if (currentPet.getId() > 0) {
+            System.out.println("Log In successful!");
+        } else if (currentPet.getId() == 0) {
+            System.out.println("Hmm.. Seems like this pet hasn't been added yet!");
+        }
         return currentPetList;
     }
 
@@ -505,14 +532,17 @@ public class DBConnection {
             String sqlStatement = "DELETE FROM medicine " +
                     "WHERE medicine.pet_id = " + currentPet.getId() + " AND medicine.type_of_meds LIKE '%" + scanner.next() + "%' ";
 
+            int rowsAffected = statement.executeUpdate(sqlStatement);
 
-            statement.execute(sqlStatement);
+            if (rowsAffected != 0) {
+                System.out.println("Medical record has been successfully deleted!");
+            } else {
+                System.out.println("Error. Selected medical record not found!");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error deleting medicine : " + exception);
         }
-        System.out.println("Medical record has been successfully deleted!");
-
     }
 
     public void deleteVaccRec(Scanner scanner, Pets currentPet) {
@@ -522,14 +552,17 @@ public class DBConnection {
             String sqlStatement = "DELETE FROM vaccines " +
                     "WHERE vaccines.pet_id = " + currentPet.getId() + " AND vaccines.vaccination_type LIKE '%" + scanner.next() + "%' ";
 
+            int rowsAffected = statement.executeUpdate(sqlStatement);
 
-            statement.execute(sqlStatement);
+            if (rowsAffected != 0) {
+                System.out.println("Vaccine record has been successfully deleted!");
+            } else {
+                System.out.println("Error. Selected vaccine record not found!");
+            }
 
         } catch (SQLException exception) {
             System.out.println("Error deleting vaccine : " + exception);
         }
-        System.out.println("Vaccination record has been successfully deleted!");
-
     }
 
     public void deleteFoodRec(Scanner scanner, Pets currentPet) {
@@ -539,13 +572,17 @@ public class DBConnection {
             String sqlStatement = "DELETE FROM food " +
                     "WHERE food.pet_id = " + currentPet.getId() + " AND food.food_brand LIKE '%" + scanner.next() + "%' ";
 
+            int rowsAffected = statement.executeUpdate(sqlStatement);
 
-            statement.execute(sqlStatement);
+            if (rowsAffected != 0) {
+                System.out.println("Food item has been successfully deleted!");
+            } else {
+                System.out.println("Error. Selected food item not found!");
+            }
 
         } catch (SQLException exception) {
-            System.out.println("Error deleting vaccine : " + exception);
+            System.out.println("Error deleting food item : " + exception);
         }
-        System.out.println("Food item has been successfully deleted!");
 
     }
 
@@ -554,19 +591,21 @@ public class DBConnection {
 
             Statement statement = conn.createStatement();
             String sqlStatement = "DELETE FROM pets " +
-                    "WHERE pets.name LIKE '%" + scanner.next() + "%' ";
+                    "WHERE pets.name = '" + scanner.next() + "'";
 
-            statement.execute(sqlStatement);
+            int rowsAffected = statement.executeUpdate(sqlStatement);
+
+            if (rowsAffected != 0) {
+                System.out.println("Pet was deleted successfully!");
+            } else {
+                System.out.println("Error. Selected pet not found!");
+            }
 
         } catch (SQLException exception) {
-            System.out.println("Error deleting vaccine : " + exception);
+            System.out.println("Error deleting pet : " + exception);
         }
-        System.out.println("Pet record deleted!");
 
     }
-
-
-
 
 
 }

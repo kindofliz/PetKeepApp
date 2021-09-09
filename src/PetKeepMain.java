@@ -13,32 +13,37 @@ public class PetKeepMain {
         int menuItem;
 
         do {
-            System.out.println();
-            System.out.println("============== WELCOME! ==============");
-            System.out.println();
-            System.out.println("What would you like to do?");
-            System.out.println("1. - Add a new pet."); //done
-            System.out.println("2. - See my pet list."); //done
-            System.out.println("3. - See a pet's complete profile."); //done
-            System.out.println("4. - See vaccination schedule."); //done
-            System.out.println("5. - See medication schedule."); //done
-            System.out.println("6. - See food information."); //done
-            System.out.println("7. - Delete a pet."); //done
-            System.out.println();
-            System.out.println("EDITING YOUR PET PROFILES");
-            System.out.println("|Before you proceed, please LOG IN using the pet's name whose profile you'd like to edit!|");
-            System.out.println("||If you'd like to switch the pet after logging in, choose menu item 8 once again :) ||");
-            System.out.println();
-            System.out.println("8. - LOG INTO MY PET'S PROFILE");
-            if (currentPet.getId() != 0) {
-                System.out.println("9. - Add my pet's food information."); //done
-                System.out.println("10. - Add my pet's medication information."); //done
-                System.out.println("11. - Add my pet's vaccination information."); //done
-                System.out.println("12. - Delete a medication record"); //done
-                System.out.println("13. - Delete a vaccination record."); //done
-                System.out.println("14. - Delete a food record."); //done
+            if (currentPet.getId() == 0) {
+                System.out.println();
+                System.out.println("============== WELCOME! ==============");
+                System.out.println();
+                System.out.println("============= MAIN MENU ==============");
+                System.out.println("What would you like to do?");
+                System.out.println("1. - Add a new pet.");
+                System.out.println("2. - See my pet list.");
+                System.out.println("3. - See a pet's complete profile.");
+                System.out.println("4. - See vaccination schedule.");
+                System.out.println("5. - See medication schedule.");
+                System.out.println("6. - See food information.");
+                System.out.println("7. - Delete a pet.");
+                System.out.println();
+                System.out.println("To add or delete information: ");
+                System.out.println("8. - LOG INTO A PET'S PROFILE");
+            } else if (currentPet.getId() != 0) {
+                System.out.println();
+                System.out.println("============= EDIT PET INFO ==============");
+                System.out.println();
+                System.out.println("Choose what to do next: ");
+                System.out.println("9. - Add my pet's food information.");
+                System.out.println("10. - Add my pet's medication information.");
+                System.out.println("11. - Add my pet's vaccination information.");
+                System.out.println("12. - Delete a medication record");
+                System.out.println("13. - Delete a vaccination record.");
+                System.out.println("14. - Delete a food record.");
+                System.out.println();
+                System.out.println("15. - LOG OUT and go back to MAIN MENU!");
             }
-            System.out.println("0. - Exit!"); //done
+            System.out.println("0. - Exit!");
 
             menuItem = scanner.nextInt();
 
@@ -164,6 +169,11 @@ public class PetKeepMain {
                     petKeepDb.deleteFoodRec(scanner, currentPet);
 
                     break;
+                case 15:
+                    //LOG OUT AND GO BACK TO MAIN MENU
+                    currentPet.setId(0);
+
+                    break;
                 default:
                     if (menuItem != 0) {
                         System.out.println("Menu item does not exist!");
@@ -182,121 +192,121 @@ public class PetKeepMain {
     //METHODS TO ADD (FOR USER) ITEMS
     public static void addAPet(Scanner scanner, Pets myPet) {
 
-        // 1. Asking user to input their pet's name with some validation
-        String name;
-        int checkName = 0;
+            // 1. Asking user to input their pet's name with some validation
+            String name;
+            int checkName = 0;
 
-        do {
-            System.out.println("Enter your pet's name:");
-            name = scanner.next();
-            if (name.matches("[A-Z][a-zA-Z']*")) {
-                myPet.setName(name);
-                checkName = 1;
-            } else {
-                System.out.println("Invalid name.. try again.");
-            }
-        } while (checkName == 0);
-
-
-        // 2. Asking user to input their pet's type with some validation
-        String type;
-        int checkType = 0;
-
-        do {
-            System.out.println("What type of animal is it? (Dog, Cat, etc.)");
-            type = scanner.next().toUpperCase(Locale.ROOT);
-            if (type.matches("[a-zA-Z]*")) {
-                myPet.setAnimalType(type);
-                checkType = 1;
-            } else {
-                System.out.println("Invalid animal type.. try again.");
-            }
-        } while (checkType == 0);
+            do {
+                System.out.println("Enter your pet's name:");
+                name = scanner.next();
+                if (name.matches("[A-Z][a-zA-Z']*")) {
+                    myPet.setName(name);
+                    checkName = 1;
+                } else {
+                    System.out.println("Invalid name.. try again.");
+                }
+            } while (checkName == 0);
 
 
-        // 3. Asking user to input their pet's breed with some validation
-        String breed;
-        int checkBreed = 0;
+            // 2. Asking user to input their pet's type with some validation
+            String type;
+            int checkType = 0;
 
-        do {
-            System.out.println("Enter your pet's breed:");
-            scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            breed = scanner.next();
-            if (breed.matches("[a-zA-Z'\\-\\s+]*")) {
-                myPet.setAnimalBreed(breed);
-                checkBreed = 1;
-            } else {
-                System.out.println("Invalid breed input.. try again.");
-            }
-        } while (checkBreed == 0);
-
-
-        // 4. Asking user to input their pet's birthday
-        String dateOfBirth;
-        int checkDate = 0;
-
-        do {
-            System.out.println("Enter your pet's birthday (yyyy-mm-dd):");
-            dateOfBirth = scanner.next();
-            if (dateOfBirth.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
-                myPet.setDateOfBirth(dateOfBirth);
-                checkDate = 1;
-            } else {
-                System.out.println("Invalid date format.. try again.");
-                System.out.println();
-            }
-        } while (checkDate == 0);
+            do {
+                System.out.println("What type of animal is it? (Dog, Cat, etc.)");
+                type = scanner.next().toUpperCase(Locale.ROOT);
+                if (type.matches("[a-zA-Z]*")) {
+                    myPet.setAnimalType(type);
+                    checkType = 1;
+                } else {
+                    System.out.println("Invalid animal type.. try again.");
+                }
+            } while (checkType == 0);
 
 
-        // 5. Asking user to input their pet's gender
-        int checkGen = 0;
+            // 3. Asking user to input their pet's breed with some validation
+            String breed;
+            int checkBreed = 0;
 
-        do {
-            System.out.println("Is your pet male (M) or female (F)?");
-            char gender = scanner.next().toUpperCase(Locale.ROOT).charAt(0);
-            String genderAsString = String.valueOf(gender);
-
-            if ((genderAsString.equalsIgnoreCase("M")) || (genderAsString.equalsIgnoreCase("Y"))) {
-                myPet.setGender(gender);
-                checkGen = 1;
-            } else {
-                System.out.println("Invalid input.. try again.");
-                System.out.println();
-            }
-        } while (checkGen == 0);
-
-        // 6. Asking user to input their pet's weight
-        double weight;
-        int checkWeight = 0;
-
-        do {
-            System.out.println("Your pet's weight (kg): ");
-            weight = scanner.nextDouble();
-            if (weight > 0) {
-                myPet.setWeight(weight);
-                checkWeight = 1;
-            } else {
-                System.out.println("Invalid weight.. try again.");
-                System.out.println();
-            }
-        } while (checkWeight == 0);
+            do {
+                System.out.println("Enter your pet's breed:");
+                scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+                breed = scanner.next();
+                if (breed.matches("[a-zA-Z'\\-\\s+]*")) {
+                    myPet.setAnimalBreed(breed);
+                    checkBreed = 1;
+                } else {
+                    System.out.println("Invalid breed input.. try again.");
+                }
+            } while (checkBreed == 0);
 
 
-        // 7. Asking user to input their pet's owner
-        String owner;
-        int checkOwner = 0;
+            // 4. Asking user to input their pet's birthday
+            String dateOfBirth;
+            int checkDate = 0;
 
-        do {
-            System.out.println("Enter owner's name: ");
-            scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-            owner = scanner.next();
-            if (owner.matches("[A-Z][a-zA-Z'.\\s+]*")) {
-                myPet.setOwner(owner);
-                checkOwner = 1;
-            } else {
-                System.out.println("Invalid owner's name.. try again.");
-            }
-        } while (checkOwner == 0);
+            do {
+                System.out.println("Enter your pet's birthday (yyyy-mm-dd):");
+                dateOfBirth = scanner.next();
+                if (dateOfBirth.matches("^\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|[3][01])")) {
+                    myPet.setDateOfBirth(dateOfBirth);
+                    checkDate = 1;
+                } else {
+                    System.out.println("Invalid date format.. try again.");
+                    System.out.println();
+                }
+            } while (checkDate == 0);
+
+
+            // 5. Asking user to input their pet's gender
+            int checkGen = 0;
+
+            do {
+                System.out.println("Is your pet male (M) or female (F)?");
+                char gender = scanner.next().toUpperCase(Locale.ROOT).charAt(0);
+                String genderAsString = String.valueOf(gender);
+
+                if ((genderAsString.equalsIgnoreCase("M")) || (genderAsString.equalsIgnoreCase("F"))) {
+                    myPet.setGender(gender);
+                    checkGen = 1;
+                } else {
+                    System.out.println("Invalid input.. try again.");
+                    System.out.println();
+                }
+            } while (checkGen == 0);
+
+            // 6. Asking user to input their pet's weight
+            double weight;
+            int checkWeight = 0;
+
+            do {
+                System.out.println("Your pet's weight (kg): ");
+                weight = scanner.nextDouble();
+                if (weight > 0) {
+                    myPet.setWeight(weight);
+                    checkWeight = 1;
+                } else {
+                    System.out.println("Invalid weight.. try again.");
+                    System.out.println();
+                }
+            } while (checkWeight == 0);
+
+
+            // 7. Asking user to input their pet's owner
+            String owner;
+            int checkOwner = 0;
+
+            do {
+                System.out.println("Enter owner's name: ");
+                scanner.nextLine(); //making sure the cursor moves to the new line before scanning
+                owner = scanner.next();
+                if (owner.matches("[A-Z][a-zA-Z'.\\s+]*")) {
+                    myPet.setOwner(owner);
+                    checkOwner = 1;
+                } else {
+                    System.out.println("Invalid owner's name.. try again.");
+                }
+            } while (checkOwner == 0);
 
     }
 
