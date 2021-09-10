@@ -1,10 +1,14 @@
+import java.time.LocalDate;
+
+
 public class Food {
 
     //Attributes
     private String foodBrand;
-    private int foodBagWeight;
+    private int foodBagWeight; //in kg
     private int dailyAmount; //in grams
     private String purchaseDate;
+    private int petId;
 
 
     //no-argument constructor
@@ -15,12 +19,25 @@ public class Food {
     //METHODS
     @Override
     public String toString() {
-        return "Food{" +
-                "foodBrand='" + foodBrand + '\'' +
-                ", foodBagWeight=" + foodBagWeight +
-                ", dailyAmount=" + dailyAmount +
-                ", purchaseDate='" + purchaseDate + '\'' +
-                '}';
+        return "||Food brand: '" + foodBrand + "\'" +
+                " ||Purchased bag weight: " + foodBagWeight + " (kg) " +
+                "||Daily feeding: " + dailyAmount + " (grams) " +
+                "||Purchase date: '" + purchaseDate + "\'";
+    }
+
+    //In how many days will the food run out?
+    public int foodDays() {
+
+        return (foodBagWeight*1000)/dailyAmount;
+    }
+
+    //Date when to buy new bag
+    public String buyFood() {
+
+        String date = purchaseDate;
+        LocalDate localDate = LocalDate.parse(date);
+
+        return localDate.plusDays(foodDays()).toString();
     }
 
 
@@ -57,5 +74,11 @@ public class Food {
         this.purchaseDate = purchaseDate;
     }
 
+    public int getPetId() {
+        return petId;
+    }
 
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
 }

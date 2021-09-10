@@ -1,4 +1,5 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Pets {
 
@@ -6,18 +7,39 @@ public class Pets {
     private String name;
     private String animalType;   //Dog, cat, hamster, etc;
     private String animalBreed;
-    private String dateOfBirth;  //dd/MM/yyyy
+    private String dateOfBirth;  //yyyy-mm-dd
     private char gender;         //M/F
     private double weight;       //in kg
     private String owner;        //Name
+    private int id;
 
 
     //no-argument constructor
     public Pets() {
     }
 
+    //METHOD TO CALCULATE AGE
+    public void petAge() {
 
-    //METHODS
+        LocalDate start = LocalDate.parse(dateOfBirth);
+        LocalDate end = LocalDate.now();
+        long ageInMonths = ChronoUnit.MONTHS.between(start, end);
+
+        if (ageInMonths > 12) {
+            int ageInYears = (int) ageInMonths/12;
+            System.out.println(ageInYears + " years old!");
+        } else if ((ageInMonths > 0) && (ageInMonths < 12)){
+            System.out.println(ageInMonths + " months old!");
+        } else {
+            System.out.println("Hmm.. looks like the birthday hasn't been added for this pet!");
+        }
+    }
+
+
+
+
+
+    //TO-STRING METHOD
     @Override
     public String toString() {
         return "PET || " +
@@ -89,8 +111,11 @@ public class Pets {
         this.owner = owner;
     }
 
+    public int getId() {
+        return id;
+    }
 
-
-
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }

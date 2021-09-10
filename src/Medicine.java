@@ -5,6 +5,7 @@ public class Medicine {
     private int regularity; //in months
     private String dateGiven;
     private String dateToGiveNext;
+    private int petId;
 
 
     //no-argument constructor
@@ -24,12 +25,20 @@ public class Medicine {
 
 
     //GETTERS AND SETTERS
-    public String getNameOfMedicine() {
+    public String getTypeOfMeds() {
         return typeOfMeds;
     }
 
-    public void setNameOfMedicine(String nameOfMedicine) {
-        this.typeOfMeds = nameOfMedicine;
+    public void setTypeOfMeds(String typeOfMeds) {
+        this.typeOfMeds = typeOfMeds;
+    }
+
+    public int getRegularity() {
+        return regularity;
+    }
+
+    public void setRegularity(int regularity) {
+        this.regularity = regularity;
     }
 
     public String getDateGiven() {
@@ -46,5 +55,13 @@ public class Medicine {
 
     public void setDateToGiveNext(String dateToGiveNext) {
         this.dateToGiveNext = dateToGiveNext;
+    }
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 }
