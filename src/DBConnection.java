@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -208,6 +207,7 @@ public class DBConnection {
                 pet.setName(rs.getString("name"));
 
                 System.out.println(pet.getName());
+
             }
         } catch (SQLException exception) {
             System.out.println("Error getting Pet name list: " + exception);
@@ -217,7 +217,7 @@ public class DBConnection {
 
     public ArrayList<Pets> getPetProfile() {
 
-        ArrayList<Pets> petJustOne = new ArrayList<>();
+        ArrayList<Pets> petProfile = new ArrayList<>();
 
         try {
             Statement statement = conn.createStatement();
@@ -241,26 +241,27 @@ public class DBConnection {
                 System.out.println("=========================================================== MY PET ===========================================================");
                 System.out.println(pet);
                 System.out.println();
-                System.out.println("Additional Info: ");
+                System.out.println("Additional info: ");
                 System.out.println();
-                System.out.println(pet.getName() + " is: ");
+                System.out.println(pet.getName() + " is currently: ");
                 pet.petAge();
+                System.out.println();
+                seePtExtraFood(pet);
                 System.out.println();
                 seePtExtraVaccines(pet);
                 seePtExtraMeds(pet);
-                seePtExtraFood(pet);
                 System.out.println("==============================================================================================================================");
-            }
 
+            }
         } catch (SQLException exception) {
             System.out.println("Error getting One pet's information: " + exception);
         }
 
-        return petJustOne;
+        return petProfile;
     }
 
 
-    //METHODS TO ADD ALL INFO TO ONE PETS PROFILE
+    //METHODS TO ADD AND SHOW ALL INFO IN ONE PETS PROFILE
     public void seePtExtraVaccines(Pets pet) {
 
         try {
@@ -390,7 +391,7 @@ public class DBConnection {
                 String nextVaccination = resultSet.getString("date_to_vaccinate_next");
 
 
-                System.out.println("Next vaccination date: " + "|" + nextVaccination + "|" + " Vaccine: " + "|" + vaccineTitle + "|" + " PET ---> " + petsName.toUpperCase(Locale.ROOT));
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " -> " + "|| Next vaccination: " + nextVaccination + " || Vaccine Type: " + vaccineTitle);
 
             }
         } catch (SQLException exception) {
@@ -424,7 +425,7 @@ public class DBConnection {
                 String medicineTitle = resultSet.getString("type_of_meds");
                 String nextMedAdministration = resultSet.getString("date_to_give_next");
 
-                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + " Next date to administer meds: " + "|" + nextMedAdministration + "|" + " Medication type: " + "|" + medicineTitle + "|");
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " -> " + "|| Next date to give meds: " + nextMedAdministration + " || Medication Type: " + medicineTitle);
 
             }
         } catch (SQLException exception) {
@@ -462,7 +463,7 @@ public class DBConnection {
                 food.setPurchaseDate(resultSet.getString("purchase_date"));
 
 
-                System.out.println(petsName.toUpperCase(Locale.ROOT) + " ---> " + food);
+                System.out.println(petsName.toUpperCase(Locale.ROOT) + " -> " + food);
                 System.out.println();
                 System.out.println("This food bag will last you: " + food.foodDays() + " days from purchase date!");
                 System.out.println("You will need to buy a new bag by: " + food.buyFood());

@@ -1,7 +1,5 @@
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
+
 
 public class Food {
 
@@ -21,19 +19,16 @@ public class Food {
     //METHODS
     @Override
     public String toString() {
-        return "| Food brand: '" + foodBrand + '\'' +
-                "| Purchased bag weight: " + foodBagWeight + " kg " +
-                "| Daily feeding: " + dailyAmount + " grams " +
-                "| Purchase date: '" + purchaseDate + '\'' +
-                '|';
+        return "||Food brand: '" + foodBrand + "\'" +
+                " ||Purchased bag weight: " + foodBagWeight + " (kg) " +
+                "||Daily feeding: " + dailyAmount + " (grams) " +
+                "||Purchase date: '" + purchaseDate + "\'";
     }
 
     //In how many days will the food run out?
     public int foodDays() {
 
-       int daysFoodWillLast = (foodBagWeight*1000)/dailyAmount;
-
-        return daysFoodWillLast;
+        return (foodBagWeight*1000)/dailyAmount;
     }
 
     //Date when to buy new bag

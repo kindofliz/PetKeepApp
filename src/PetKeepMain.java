@@ -251,8 +251,8 @@ public class PetKeepMain {
             do {
                 System.out.println("Enter your pet's breed:");
                 scanner.nextLine(); //making sure the cursor moves to the new line before scanning
-                breed = scanner.next();
-                if (breed.matches("[a-zA-Z'\\-\\s+]*")) {
+                breed = scanner.nextLine();
+                if (breed.matches("^[-a-zA-Z'\\s+]*")) {
                     myPet.setAnimalBreed(breed);
                     checkBreed = 1;
                 } else {

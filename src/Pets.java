@@ -1,8 +1,5 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 public class Pets {
 
@@ -15,7 +12,7 @@ public class Pets {
     private double weight;       //in kg
     private String owner;        //Name
     private int id;
-    //add allergies as string here?
+
 
     //no-argument constructor
     public Pets() {
@@ -31,8 +28,10 @@ public class Pets {
         if (ageInMonths > 12) {
             int ageInYears = (int) ageInMonths/12;
             System.out.println(ageInYears + " years old!");
-        } else {
+        } else if ((ageInMonths > 0) && (ageInMonths < 12)){
             System.out.println(ageInMonths + " months old!");
+        } else {
+            System.out.println("Hmm.. looks like the birthday hasn't been added for this pet!");
         }
     }
 
