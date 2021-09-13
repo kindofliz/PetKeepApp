@@ -28,16 +28,25 @@ public class Food {
     //In how many days will the food run out?
     public int foodDays() {
 
-        return (foodBagWeight*1000)/dailyAmount;
+        if (foodBagWeight != 0) {
+            return (foodBagWeight*1000)/dailyAmount;
+        } else {
+            return 0;
+        }
+
     }
 
     //Date when to buy new bag
     public String buyFood() {
 
         String date = purchaseDate;
-        LocalDate localDate = LocalDate.parse(date);
+        if (purchaseDate != null) {
+            LocalDate localDate = LocalDate.parse(date);
+            return localDate.plusDays(foodDays()).toString();
+        } else {
+            return ("Sorry, no food information. Couldn't calculate the date!!");
+        }
 
-        return localDate.plusDays(foodDays()).toString();
     }
 
 
